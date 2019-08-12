@@ -1,6 +1,8 @@
 #import "TalkingDataAppAnalyticsPlugin.h"
 #import "TalkingData.h"
+
 @implementation TalkingDataAppAnalyticsPlugin
+  
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"TalkingData_AppAnalytics"
@@ -16,7 +18,7 @@
     [TalkingData sessionStarted:session withChannelId:channelID];
 }
 
--(id)checkArgument:(NSDictionary*)argument ForKey:(NSString*)key ofType:(Class)clazz
+-(id)checkArgument:(NSDictionary*)argument forKey:(NSString*)key ofType:(Class)clazz
 {
     if (key == nil || argument == nil || clazz == nil  ) {
         return nil;
@@ -75,108 +77,101 @@
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     NSLog(@"%@",call.method);
     NSLog(@"%@",call.arguments);
-    if ([@"getPlatformVersion" isEqualToString:call.method]) {
-        result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-    }else if ([@"onPageEnd" isEqualToString:call.method]){
-        NSString * pageName = [self checkArgument:call.arguments ForKey:@"pageName" ofType:[NSString class]];
+    if ([@"onPageEnd" isEqualToString:call.method]){
+        NSString * pageName = [self checkArgument:call.arguments forKey:@"pageName" ofType:[NSString class]];
         if (pageName) {
             [TalkingData trackPageEnd:pageName];
         }
     } else if ([@"onPageStart" isEqualToString:call.method]){
-        NSString * pageName = [self checkArgument:call.arguments ForKey:@"pageName" ofType:[NSString class]];
+        NSString * pageName = [self checkArgument:call.arguments forKey:@"pageName" ofType:[NSString class]];
         if (pageName) {
             [TalkingData trackPageBegin:pageName];
         }
     } else if ([@"onRegister" isEqualToString:call.method]){
-        NSString * accountID = [self checkArgument:call.arguments ForKey:@"accountID" ofType:[NSString class]];
-        NSString * accountType = [self checkArgument:call.arguments ForKey:@"accountType" ofType:[NSString class]];
-        NSString * name = [self checkArgument:call.arguments ForKey:@"name" ofType:[NSString class]];
+        NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+        NSString * accountType = [self checkArgument:call.arguments forKey:@"accountType" ofType:[NSString class]];
+        NSString * name = [self checkArgument:call.arguments forKey:@"name" ofType:[NSString class]];
         if (accountID && accountType && name) {
             TDAccountType acctype = [self accountTypeConvert:accountType];
             [TalkingData onRegister:accountID type:acctype name:name];
         }
     } else if ([@"onLogin" isEqualToString:call.method]){
-        NSString * accountID = [self checkArgument:call.arguments ForKey:@"accountID" ofType:[NSString class]];
-        NSString * accountType = [self checkArgument:call.arguments ForKey:@"accountType" ofType:[NSString class]];
-        NSString * name = [self checkArgument:call.arguments ForKey:@"name" ofType:[NSString class]];
+        NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+        NSString * accountType = [self checkArgument:call.arguments forKey:@"accountType" ofType:[NSString class]];
+        NSString * name = [self checkArgument:call.arguments forKey:@"name" ofType:[NSString class]];
         if (accountID && accountType && name) {
             TDAccountType acctype = [self accountTypeConvert:accountType];
             [TalkingData onLogin:accountID type:acctype name:name];
         }
     } else if ([@"onEvent" isEqualToString:call.method]){
-        NSString * eventID = [self checkArgument:call.arguments ForKey:@"eventID" ofType:[NSString class]];
-        NSString * eventLabel = [self checkArgument:call.arguments ForKey:@"eventLabel" ofType:[NSString class]];
-        NSDictionary * params = [self checkArgument:call.arguments ForKey:@"params" ofType:[NSDictionary class]];
+        NSString * eventID = [self checkArgument:call.arguments forKey:@"eventID" ofType:[NSString class]];
+        NSString * eventLabel = [self checkArgument:call.arguments forKey:@"eventLabel" ofType:[NSString class]];
+        NSDictionary * params = [self checkArgument:call.arguments forKey:@"params" ofType:[NSDictionary class]];
         if (eventID) {
             [TalkingData trackEvent:eventID label:eventLabel parameters:params];
         }
-    } else if ([@"setAntiCheatingEnabled" isEqualToString:call.method]){
-        NSNumber * isEnabled = [self checkArgument:call.arguments ForKey:@"isEnabled" ofType:[NSNumber class]];
-        if (isEnabled) {
-            [TalkingData setAntiCheatingEnabled:[isEnabled boolValue]];
-        }
     } else if ([@"onViewItem" isEqualToString:call.method]){
-        NSString* category = [self checkArgument:call.arguments ForKey:@"category" ofType:[NSString class]];
-        NSString* itemID = [self checkArgument:call.arguments ForKey:@"itemID" ofType:[NSString class]];
-        NSString* name = [self checkArgument:call.arguments ForKey:@"name" ofType:[NSString class]];
-        NSNumber* unitPrice = [self checkArgument:call.arguments ForKey:@"unitPrice" ofType:[NSNumber class]];
+        NSString* category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
+        NSString* itemID = [self checkArgument:call.arguments forKey:@"itemID" ofType:[NSString class]];
+        NSString* name = [self checkArgument:call.arguments forKey:@"name" ofType:[NSString class]];
+        NSNumber* unitPrice = [self checkArgument:call.arguments forKey:@"unitPrice" ofType:[NSNumber class]];
         [TalkingData onViewItem:itemID category:category name:name unitPrice:unitPrice.intValue];
         
     } else if ([@"onAddItemToShoppingCart" isEqualToString:call.method]){
-        NSNumber * amount = [self checkArgument:call.arguments ForKey:@"amount" ofType:[NSNumber class]];
-        NSString * category = [self checkArgument:call.arguments ForKey:@"category" ofType:[NSString class]];
-        NSString * itemID = [self checkArgument:call.arguments ForKey:@"itemID" ofType:[NSString class]];
-        NSString * name = [self checkArgument:call.arguments ForKey:@"name" ofType:[NSString class]];
-        NSNumber * uniprice = [self checkArgument:call.arguments ForKey:@"unitPrice" ofType:[NSNumber class]];
+        NSNumber * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
+        NSString * category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
+        NSString * itemID = [self checkArgument:call.arguments forKey:@"itemID" ofType:[NSString class]];
+        NSString * name = [self checkArgument:call.arguments forKey:@"name" ofType:[NSString class]];
+        NSNumber * uniprice = [self checkArgument:call.arguments forKey:@"unitPrice" ofType:[NSNumber class]];
         [TalkingData onAddItemToShoppingCart:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
     } else if ([@"onViewShoppingCart" isEqualToString:call.method]){
-        NSArray * shoppingCartDetails = [self checkArgument:call.arguments ForKey:@"shoppingCartDetails" ofType:[NSArray class]];
+        NSArray * shoppingCartDetails = [self checkArgument:call.arguments forKey:@"shoppingCartDetails" ofType:[NSArray class]];
         TalkingDataShoppingCart * sc = [TalkingDataShoppingCart createShoppingCart];
         for (NSDictionary* each in shoppingCartDetails) {
-            NSNumber * amount = [self checkArgument:each ForKey:@"amount" ofType:[NSNumber class]];
-            NSString * category = [self checkArgument:each ForKey:@"category" ofType:[NSString class]];
-            NSString * itemID = [self checkArgument:each ForKey:@"itemID" ofType:[NSString class]];
-            NSString * name = [self checkArgument:each ForKey:@"name" ofType:[NSString class]];
-            NSNumber * uniprice = [self checkArgument:each ForKey:@"unitPrice" ofType:[NSNumber class]];
+            NSNumber * amount = [self checkArgument:each forKey:@"amount" ofType:[NSNumber class]];
+            NSString * category = [self checkArgument:each forKey:@"category" ofType:[NSString class]];
+            NSString * itemID = [self checkArgument:each forKey:@"itemID" ofType:[NSString class]];
+            NSString * name = [self checkArgument:each forKey:@"name" ofType:[NSString class]];
+            NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
             [sc addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
         }
         [TalkingData onViewShoppingCart:sc];
     } else if ([@"onPlaceOrder" isEqualToString:call.method]){
         
-        NSString * accountID = [self checkArgument:call.arguments ForKey:@"accountID" ofType:[NSString class]];
-        NSString * currencyType = [self checkArgument:call.arguments ForKey:@"currencyType" ofType:[NSString class]];
-        NSArray * orderDetails = [self checkArgument:call.arguments ForKey:@"orderDetails" ofType:[NSArray class]];
-        NSString * orderID = [self checkArgument:call.arguments ForKey:@"orderID" ofType:[NSString class]];
-        NSNumber * totalPrice = [self checkArgument:call.arguments ForKey:@"totalPrice" ofType:[NSNumber class]];
+        NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+        NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
+        NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
+        NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
+        NSNumber * totalPrice = [self checkArgument:call.arguments forKey:@"totalPrice" ofType:[NSNumber class]];
         
         TalkingDataOrder * order = [TalkingDataOrder createOrder:orderID total:totalPrice.intValue currencyType:currencyType];
         
         for (NSDictionary * each in orderDetails) {
-            NSNumber * amount = [self checkArgument:each ForKey:@"amount" ofType:[NSNumber class]];
-            NSString * category = [self checkArgument:each ForKey:@"category" ofType:[NSString class]];
-            NSString * itemID = [self checkArgument:each ForKey:@"itemID" ofType:[NSString class]];
-            NSString * name = [self checkArgument:each ForKey:@"name" ofType:[NSString class]];
-            NSNumber * uniprice = [self checkArgument:each ForKey:@"unitPrice" ofType:[NSNumber class]];
+            NSNumber * amount = [self checkArgument:each forKey:@"amount" ofType:[NSNumber class]];
+            NSString * category = [self checkArgument:each forKey:@"category" ofType:[NSString class]];
+            NSString * itemID = [self checkArgument:each forKey:@"itemID" ofType:[NSString class]];
+            NSString * name = [self checkArgument:each forKey:@"name" ofType:[NSString class]];
+            NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
             [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
         }
         [TalkingData onPlaceOrder:accountID order:order];
         
     } else if ([@"onOrderPaySucc" isEqualToString:call.method]){
-        NSString * accountID = [self checkArgument:call.arguments ForKey:@"accountID" ofType:[NSString class]];
-        NSString * currencyType = [self checkArgument:call.arguments ForKey:@"currencyType" ofType:[NSString class]];
-        NSArray * orderDetails = [self checkArgument:call.arguments ForKey:@"orderDetails" ofType:[NSArray class]];
-        NSString * orderID = [self checkArgument:call.arguments ForKey:@"orderID" ofType:[NSString class]];
-        NSString * payType = [self checkArgument:call.arguments ForKey:@"payType" ofType:[NSString class]];
-        NSNumber * totalPrice = [self checkArgument:call.arguments ForKey:@"totalPrice" ofType:[NSNumber class]];
+        NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+        NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
+        NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
+        NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
+        NSString * payType = [self checkArgument:call.arguments forKey:@"payType" ofType:[NSString class]];
+        NSNumber * totalPrice = [self checkArgument:call.arguments forKey:@"totalPrice" ofType:[NSNumber class]];
         
         TalkingDataOrder * order = [TalkingDataOrder createOrder:orderID total:totalPrice.intValue currencyType:currencyType];
         
         for (NSDictionary * each in orderDetails) {
-            NSNumber * amount = [self checkArgument:each ForKey:@"amount" ofType:[NSNumber class]];
-            NSString * category = [self checkArgument:each ForKey:@"category" ofType:[NSString class]];
-            NSString * itemID = [self checkArgument:each ForKey:@"itemID" ofType:[NSString class]];
-            NSString * name = [self checkArgument:each ForKey:@"name" ofType:[NSString class]];
-            NSNumber * uniprice = [self checkArgument:each ForKey:@"unitPrice" ofType:[NSNumber class]];
+            NSNumber * amount = [self checkArgument:each forKey:@"amount" ofType:[NSNumber class]];
+            NSString * category = [self checkArgument:each forKey:@"category" ofType:[NSString class]];
+            NSString * itemID = [self checkArgument:each forKey:@"itemID" ofType:[NSString class]];
+            NSString * name = [self checkArgument:each forKey:@"name" ofType:[NSString class]];
+            NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
             [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
         }
         [TalkingData onOrderPaySucc:accountID payType:payType order:order];
