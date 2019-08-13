@@ -212,7 +212,25 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
 
 **iOS**
 
-1. 
+1. 将
+
+   `/Assets/libTalkingData.a`, 
+
+   `Classes/TalkingData.h`
+
+   `Classes/TalkingDataAppAnalyticsPlugin.h`,
+
+   `Classes/TalkingDataAppAnalyticsPlugin.m` 
+
+   copy到工程项目中，记得勾选copyIfNeeded。如下图
+
+   ![copylib1](/Users/yuduo/AndroidStudioProjects/appanalytics/img/copylib.png)
+
+   
+
+   ![copylib1](/Users/yuduo/AndroidStudioProjects/appanalytics/img/copylib2.png)
+
+   
 
 
 
@@ -279,6 +297,33 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
 
 
 **iOS**
+
+1. 在AppDelegate里添加如下代码，注意调用顺序
+
+```diff
+#include "AppDelegate.h"
+#include "GeneratedPluginRegistrant.h"
++ #import "TalkingDataAppAnalyticsPlugin.h"
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [GeneratedPluginRegistrant registerWithRegistry:self];
+  // Override point for customization after application launch.
+   
++  [TalkingDataAppAnalyticsPlugin registerWithRegistrar:[self registrarForPlugin:@"TalkingDataAppAnalyticsPlugin"]];
+    
++ [TalkingDataAppAnalyticsPlugin pluginSessionStart:@"YourAppKey" withChannelId:@"AppStore"];
+
+  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
+
+@end
+```
+
+
+
+![copylib1](./img/iosregiste.png)
 
 
 
@@ -411,7 +456,7 @@ TalkingDataAppAnalytics.setGlobalKV('keyXXX',12221);
 **示例：**
 
 ```dart
-TalkingDataAppAnalytics.setGlobalKV('keyXXX');
+TalkingDataAppAnalytics.removeGlobalKV('keyXXX');
 ```
 
 ------

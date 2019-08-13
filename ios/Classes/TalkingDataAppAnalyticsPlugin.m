@@ -2,21 +2,21 @@
 #import "TalkingData.h"
 
 @implementation TalkingDataAppAnalyticsPlugin
-  
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"TalkingData_AppAnalytics"
             binaryMessenger:[registrar messenger]];
     TalkingDataAppAnalyticsPlugin* instance = [[TalkingDataAppAnalyticsPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
-    [instance pluginSessionStart:@"appkey" withChannelId:@"channel"];
 }
 
 
--(void)pluginSessionStart:(NSString*)session withChannelId:(NSString*)channelID
++(void)pluginSessionStart:(NSString*)session withChannelId:(NSString*)channelID
 {
     [TalkingData sessionStarted:session withChannelId:channelID];
 }
+
 
 -(id)checkArgument:(NSDictionary*)argument forKey:(NSString*)key ofType:(Class)clazz
 {
@@ -75,19 +75,17 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    NSLog(@"%@",call.method);
-    NSLog(@"%@",call.arguments);
-    if ([@"onPageEnd" isEqualToString:call.method]){
-        NSString * pageName = [self checkArgument:call.arguments forKey:@"pageName" ofType:[NSString class]];
-        if (pageName) {
-            [TalkingData trackPageEnd:pageName];
-        }
-    } else if ([@"onPageStart" isEqualToString:call.method]){
+    if ([@"onPageStart" isEqualToString:call.method]){
         NSString * pageName = [self checkArgument:call.arguments forKey:@"pageName" ofType:[NSString class]];
         if (pageName) {
             [TalkingData trackPageBegin:pageName];
         }
-    } else if ([@"onRegister" isEqualToString:call.method]){
+    } else if ([@"onPageEnd" isEqualToString:call.method]){
+        NSString * pageName = [self checkArgument:call.arguments forKey:@"pageName" ofType:[NSString class]];
+        if (pageName) {
+            [TalkingData trackPageEnd:pageName];
+        }
+    } else  if ([@"onRegister" isEqualToString:call.method]){
         NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
         NSString * accountType = [self checkArgument:call.arguments forKey:@"accountType" ofType:[NSString class]];
         NSString * name = [self checkArgument:call.arguments forKey:@"name" ofType:[NSString class]];
@@ -137,7 +135,6 @@
         }
         [TalkingData onViewShoppingCart:sc];
     } else if ([@"onPlaceOrder" isEqualToString:call.method]){
-        
         NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
         NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
         NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
@@ -175,6 +172,15 @@
             [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
         }
         [TalkingData onOrderPaySucc:accountID payType:payType order:order];
+    }else if ([@"setGlobalKV" isEqualToString:call.method]) {
+        NSString * key = [self checkArgument:call.arguments forKey:@"key" ofType:[NSString class]];
+        id value = call.arguments[@"value"];
+        if (value) {
+            [TalkingData setGlobalKV:key value:value];
+        }
+    }else if ([@"removeGlobalKV" isEqualToString:call.method]){
+        NSString * key = [self checkArgument:call.arguments forKey:@"key" ofType:[NSString class]];
+        [TalkingData removeGlobalKV:key];
     } else {
         result(FlutterMethodNotImplemented);
     }
