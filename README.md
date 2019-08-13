@@ -11,7 +11,7 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
 
 <span id="integration"/>
 
-##集成说明
+## 集成说明
 
 1. 下载本项目（封装层）到本地；
 
@@ -243,11 +243,11 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
 - 在项目的 `pubspec.yaml` 文件中，添加如下配置
 
    ```diff
-   	dependencies:
-     	flutter:
-       	sdk: flutter
-   + 	talkingdata_appanalytics_plugin:
-   +   	path: 插件文件夹名(如：appanalytics)
+      dependencies:
+        flutter:
+          sdk: flutter
+   +    talkingdata_appanalytics_plugin:
+   +      path: 插件文件夹名(如：appanalytics)
    ```
 
 <span id='usage'>
@@ -261,14 +261,14 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
 2. 在 Application 的 onCreate 方法中添加 SDK 的初始化调用
 
    ```diff
-   +	import com.tendcloud.tenddata.TCAgent;
-    	class MyApplication extends Application{
-       @Override
-   	 	public void onCreate() {
-      	  super.onCreate();
-   +    	TCAgent.init(getApplicationContext(), "Your App ID", "Channel ID");
-   	 	}
-    	}
+   +  import com.tendcloud.tenddata.TCAgent;
+        class MyApplication extends Application{
+          @Override
+          public void onCreate() {
+            super.onCreate();
+   +        TCAgent.init(getApplicationContext(), "Your App ID", "Channel ID");
+          }
+      }
    ```
    
 3. 在 AndroidManifest.xml 中添加以下权限：
