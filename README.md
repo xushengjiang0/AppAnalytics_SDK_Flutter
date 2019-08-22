@@ -206,10 +206,10 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
 
 - 将最新的 .jar 文件复制到 flutter 项目的 `android/libs` 目录下
 
-  ![import_jar](/Users/yuduo/AndroidStudioProjects/appanalytics/img/import_jar.png)
+  ![import_jar](img/import_jar.png)
 - 在`android/build.gradle`中添加对 jar 包的引用
 
-  ![gradle_conf](/Users/yuduo/AndroidStudioProjects/appanalytics/img/gradle_conf.png)
+  ![gradle_conf](img/gradle_conf.png)
 
 **iOS**
 
@@ -225,11 +225,11 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
 
    copy到工程项目中，记得勾选copyIfNeeded。如下图
 
-   ![copylib1](/Users/yuduo/AndroidStudioProjects/appanalytics/img/copylib.png)
+   ![copylib1](img/copylib.png)
 
    
 
-   ![copylib1](/Users/yuduo/AndroidStudioProjects/appanalytics/img/copylib2.png)
+   ![copylib1](img/copylib2.png)
 
    
 
