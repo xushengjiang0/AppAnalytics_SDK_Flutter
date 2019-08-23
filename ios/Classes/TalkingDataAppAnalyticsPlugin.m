@@ -181,6 +181,9 @@
     }else if ([@"removeGlobalKV" isEqualToString:call.method]){
         NSString * key = [self checkArgument:call.arguments forKey:@"key" ofType:[NSString class]];
         [TalkingData removeGlobalKV:key];
+    }else if ([@"getDeviceID" isEqualToString:call.method]){
+        NSString * deviceid = [TalkingData getDeviceID];
+        result(deviceid);
     } else {
         result(FlutterMethodNotImplemented);
     }

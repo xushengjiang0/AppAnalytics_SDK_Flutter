@@ -77,6 +77,31 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
      break;
    ```
 
+   删除 `ios/Classes/TalkingDataAppAnalyticsPlugin.m` 文件中如下代码：
+
+   ```objective-c
+   else if ([@"onEvent" isEqualToString:call.method]){
+           NSString * eventID = [self checkArgument:call.arguments forKey:@"eventID" ofType:[NSString class]];
+           NSString * eventLabel = [self checkArgument:call.arguments forKey:@"eventLabel" ofType:[NSString class]];
+           NSDictionary * params = [self checkArgument:call.arguments forKey:@"params" ofType:[NSDictionary class]];
+           if (eventID) {
+               [TalkingData trackEvent:eventID label:eventLabel parameters:params];
+           }
+       }
+   ...
+   else if ([@"setGlobalKV" isEqualToString:call.method]) {
+           NSString * key = [self checkArgument:call.arguments forKey:@"key" ofType:[NSString class]];
+           id value = call.arguments[@"value"];
+           if (value) {
+               [TalkingData setGlobalKV:key value:value];
+           }
+       }else if ([@"removeGlobalKV" isEqualToString:call.method]){
+           NSString * key = [self checkArgument:call.arguments forKey:@"key" ofType:[NSString class]];
+           [TalkingData removeGlobalKV:key];
+       }
+   
+   ```
+
    b) 未选择 `标准化事件分析` 功能则删除以下4部分
 
    删除 `lib/talkingdata_appanalytics_plugin.dart` 文件中如下代码:
@@ -169,6 +194,78 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
    }
    ```
 
+   删除 `ios/Classes/TalkingDataAppAnalyticsPlugin.m` 文件中如下代码：
+
+   ```objective-c
+   else if ([@"onViewItem" isEqualToString:call.method]){
+           NSString* category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
+           NSString* itemID = [self checkArgument:call.arguments forKey:@"itemID" ofType:[NSString class]];
+           NSString* name = [self checkArgument:call.arguments forKey:@"name" ofType:[NSString class]];
+           NSNumber* unitPrice = [self checkArgument:call.arguments forKey:@"unitPrice" ofType:[NSNumber class]];
+           [TalkingData onViewItem:itemID category:category name:name unitPrice:unitPrice.intValue];
+           
+       } else if ([@"onAddItemToShoppingCart" isEqualToString:call.method]){
+           NSNumber * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
+           NSString * category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
+           NSString * itemID = [self checkArgument:call.arguments forKey:@"itemID" ofType:[NSString class]];
+           NSString * name = [self checkArgument:call.arguments forKey:@"name" ofType:[NSString class]];
+           NSNumber * uniprice = [self checkArgument:call.arguments forKey:@"unitPrice" ofType:[NSNumber class]];
+           [TalkingData onAddItemToShoppingCart:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
+       } else if ([@"onViewShoppingCart" isEqualToString:call.method]){
+           NSArray * shoppingCartDetails = [self checkArgument:call.arguments forKey:@"shoppingCartDetails" ofType:[NSArray class]];
+           TalkingDataShoppingCart * sc = [TalkingDataShoppingCart createShoppingCart];
+           for (NSDictionary* each in shoppingCartDetails) {
+               NSNumber * amount = [self checkArgument:each forKey:@"amount" ofType:[NSNumber class]];
+               NSString * category = [self checkArgument:each forKey:@"category" ofType:[NSString class]];
+               NSString * itemID = [self checkArgument:each forKey:@"itemID" ofType:[NSString class]];
+               NSString * name = [self checkArgument:each forKey:@"name" ofType:[NSString class]];
+               NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
+               [sc addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
+           }
+           [TalkingData onViewShoppingCart:sc];
+       } else if ([@"onPlaceOrder" isEqualToString:call.method]){
+           NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+           NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
+           NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
+           NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
+           NSNumber * totalPrice = [self checkArgument:call.arguments forKey:@"totalPrice" ofType:[NSNumber class]];
+           
+           TalkingDataOrder * order = [TalkingDataOrder createOrder:orderID total:totalPrice.intValue currencyType:currencyType];
+           
+           for (NSDictionary * each in orderDetails) {
+               NSNumber * amount = [self checkArgument:each forKey:@"amount" ofType:[NSNumber class]];
+               NSString * category = [self checkArgument:each forKey:@"category" ofType:[NSString class]];
+               NSString * itemID = [self checkArgument:each forKey:@"itemID" ofType:[NSString class]];
+               NSString * name = [self checkArgument:each forKey:@"name" ofType:[NSString class]];
+               NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
+               [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
+           }
+           [TalkingData onPlaceOrder:accountID order:order];
+           
+       } else if ([@"onOrderPaySucc" isEqualToString:call.method]){
+           NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+           NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
+           NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
+           NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
+           NSString * payType = [self checkArgument:call.arguments forKey:@"payType" ofType:[NSString class]];
+           NSNumber * totalPrice = [self checkArgument:call.arguments forKey:@"totalPrice" ofType:[NSNumber class]];
+           
+           TalkingDataOrder * order = [TalkingDataOrder createOrder:orderID total:totalPrice.intValue currencyType:currencyType];
+           
+           for (NSDictionary * each in orderDetails) {
+               NSNumber * amount = [self checkArgument:each forKey:@"amount" ofType:[NSNumber class]];
+               NSString * category = [self checkArgument:each forKey:@"category" ofType:[NSString class]];
+               NSString * itemID = [self checkArgument:each forKey:@"itemID" ofType:[NSString class]];
+               NSString * name = [self checkArgument:each forKey:@"name" ofType:[NSString class]];
+               NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
+               [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
+           }
+           [TalkingData onOrderPaySucc:accountID payType:payType order:order];
+       }
+   ```
+
+
+
     c) 未选择`页面统计`功能则删除以下4部分
 
    删除 `lib/talkingdata_appanalytics_plugin.dart` 文件中如下代码:
@@ -197,6 +294,26 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
      TCAgent.onPageEnd(context, (String) call.argument("pageName"));
    	break;
    ```
+
+删除 `ios/Classes/TalkingDataAppAnalyticsPlugin.m` 文件中如下代码：
+
+```objective-c
+if ([@"onPageStart" isEqualToString:call.method]){
+        NSString * pageName = [self checkArgument:call.arguments forKey:@"pageName" ofType:[NSString class]];
+        if (pageName) {
+            [TalkingData trackPageBegin:pageName];
+        }
+    } else if ([@"onPageEnd" isEqualToString:call.method]){
+        NSString * pageName = [self checkArgument:call.arguments forKey:@"pageName" ofType:[NSString class]];
+        if (pageName) {
+            [TalkingData trackPageEnd:pageName];
+        }
+    } else 
+```
+
+
+
+
 
 <span id="install"/>
 
@@ -227,11 +344,10 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
 
    ![copylib1](img/copylib.png)
 
-   
+
 
    ![copylib1](img/copylib2.png)
 
-   
 
 
 
@@ -659,4 +775,13 @@ TalkingDataAppAnalytics.onViewShoppingCart(shoppingCart);
 ```
 
 ------
+
+## 运行Demo
+
+连接真机。终端运行：
+
+```shell
+cd sdk-talkingdata-sdk-flutter-plugin/example
+flutter run
+```
 
