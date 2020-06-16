@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/talkingdata_adtracking.iml" filepath="$PROJECT_DIR$/talkingdata_adtracking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/talkingdata_adtracking_android.iml" filepath="$PROJECT_DIR$/android/talkingdata_adtracking_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/android/talkingdata_adtracking_example_android.iml" filepath="$PROJECT_DIR$/example/android/talkingdata_adtracking_example_android.iml" />
+    </modules>
+  </component>
+</project>

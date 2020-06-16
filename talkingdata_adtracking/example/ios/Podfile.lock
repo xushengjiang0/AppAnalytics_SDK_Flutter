@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - talkingdata_adtracking (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - talkingdata_adtracking (from `.symlinks/plugins/talkingdata_adtracking/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  talkingdata_adtracking:
+    :path: ".symlinks/plugins/talkingdata_adtracking/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  talkingdata_adtracking: dfd0c6616b34bf69c6d5227c20f23290b243c1b9
+
+PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+
+COCOAPODS: 1.7.1
