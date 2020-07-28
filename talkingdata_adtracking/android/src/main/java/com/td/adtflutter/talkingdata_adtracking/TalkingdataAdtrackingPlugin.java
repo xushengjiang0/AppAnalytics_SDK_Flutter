@@ -50,6 +50,9 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
             case "getDeviceID":
                 result.success(TalkingDataAppCpa.getDeviceId(context));
                 break;
+            case "getOAID":
+                result.success(TalkingDataAppCpa.getOAID(context));
+                break;
             case "onRegister":
                 TalkingDataAppCpa.onRegister((String) call.argument("account"));
                 break;

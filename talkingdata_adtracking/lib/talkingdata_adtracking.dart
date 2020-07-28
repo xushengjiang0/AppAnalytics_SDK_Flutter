@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'dart:io';
 
 class TalkingdataAdtracking {
   static const MethodChannel _channel =
@@ -13,6 +14,13 @@ class TalkingdataAdtracking {
 
   static Future<String> getDeviceID() async{
     return await _channel.invokeMethod('getDeviceID');
+  }
+
+  static Future<String> getOAID() async{
+    if(Platform.isAndroid){
+      return await _channel.invokeMethod('getOAID');
+    }
+    return null;
   }
 
   static Future<void> onRegister(String account) async{

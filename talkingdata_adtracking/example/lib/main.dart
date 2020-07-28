@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   String deviceID;
+  String oaid;
   @override
   void initState() {
     super.initState();
@@ -52,6 +53,11 @@ class _MyAppState extends State<MyApp> {
             children: [
               RaisedButton(child: Text('getDeviceID'),onPressed: (){
                 _setDeviceID();
+              }),
+              RaisedButton(child: Text('getOAID'),onPressed: (){
+                Future.delayed(Duration(seconds:3),(){
+                  _setOAID();
+                });
               }),
               RaisedButton(child: Text('onRegister'),onPressed: (){
                 String account = "user01";
@@ -297,5 +303,11 @@ class _MyAppState extends State<MyApp> {
     deviceID =  await TalkingdataAdtracking.getDeviceID();
     //Print deviceID or dosomething
     print(deviceID);
+  }
+
+  _setOAID() async{
+    oaid =  await TalkingdataAdtracking.getOAID();
+    //Print OAID or dosomething
+    print(oaid);
   }
 }

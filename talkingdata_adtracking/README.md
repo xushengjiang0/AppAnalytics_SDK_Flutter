@@ -291,7 +291,7 @@ TalkingDataAppCpa.onRead(
 
 基础通用事件适用于**所有行业类型**的移动APP，包含注册、登录、唤醒、收藏、分享、签到打卡、添加支付信息、搜索。
 
-## <font color=#1E90FF>基础-注册</font>
+## <font color=#1E90FF>基础-获取设备ID</font>
 
 **接口名称**：getDeciveID
 
@@ -301,7 +301,7 @@ TalkingDataAppCpa.onRead(
 
 **示例**：
 
-```
+```dart
 String deviceID;
 _setDeviceID() async{
   deviceID =  await TalkingdataAdtracking.getDeviceID();
@@ -309,6 +309,34 @@ _setDeviceID() async{
   print(deviceID);
 }
 ```
+
+
+
+## <font color=#1E90FF>基础-获取OAID</font>
+
+**接口名称**：getOAID
+
+**说明**：获取OAID。需要注意的是，这个接口建议您在初始化SDK之后的3-5秒再去调用，以避免您获取到null值
+
+**参数**：无
+
+**示例**：
+
+```dart
+String oaid;
+
+Future.delayed(Duration(seconds:3),(){
+ 		_setOAID();
+});
+
+_setOAID() async{
+    oaid =  await TalkingdataAdtracking.getOAID();
+}
+```
+
+ 
+
+
 
 ## <font color=#1E90FF>基础-注册</font>
 
@@ -596,7 +624,7 @@ onPay3(account,orderId,amount,currencyType,payType,itemID,itemCount);
 | ------------ | ---------- | ------------------------------------------------------------ | -------- |
 | account      | String     | 用户帐号，支持英文、数字、符号                               | 是       |
 | orderId      | String     | 订单ID，最多64个字符，全局唯一，由开发者提供并维护（此ID很重要，如果不清楚集成时咨询客服）。用于唯一标识一次交易，以及后期系统之间对账使用；*如果多次充值成功的orderID重复，将只计算首次成功的数据，其他数据会认为重复数据丢弃。支持英文、数字、符号 | 是       |
-| currencyType | String     | 请使用国际标准组织ISO 4217中规范的3位字母代码标记货币类型。支持英文。详见【重点问题解答-问题1】 | 是       |
+| currencyType | String     | 请使用国际标准组织ISO 4217中规范的3位字母代码标记货币类型。支持英文。详见【重点问题解答-问题1】 | 否       |
 | amount       | String     | 订单的实际支付金额，单位为所选货币的分。支持数字。比如:600分或100美分，币种以后面的currrencyType为标准。 | 否       |
 | payType      | String     | 支付类型 例：appstore、支付宝、Alipay、微信等                | 否       |
 | order        | TDADTOrder | 订单，详见【专属-订单】                                      | 否       |
@@ -833,7 +861,7 @@ shoppingCart.addItem('itemID333103428', 'Food', 'banana', 777, 888);
 
 | 参数         | 类型           | 描述                       | 是否必选 |
 | ------------ | -------------- | -------------------------- | -------- |
-| shoppingCart | TDShoppingCart | 购物车详情，详见创建购物车 | 是       |
+| shoppingCart | TDShoppingCart | 购物车详情，详见创建购物车 | 否       |
 
 **示例：**
 
@@ -864,9 +892,9 @@ TalkingdataAdtracking.onViewShoppingCart(shoppingCart);
 
 | 参数         | 类型   | 描述                                                         | 是否必选 |
 | ------------ | ------ | ------------------------------------------------------------ | -------- |
-| orderId      | String | 订单ID，最多64个字符，全局唯一，由开发者提供并维护（此ID很重要，如果不清楚集成时咨询客服）。 | 是       |
+| orderId      | String | 订单ID，最多64个字符，全局唯一，由开发者提供并维护（此ID很重要，如果不清楚集成时咨询客服）。 | 否       |
 | total        | int    | 订单金额，单位为所选货币的分。例如：600分或100美分，币种以后面的currrencyType为标准。 | 否       |
-| currencyType | String | 请使用国际标准组织ISO 4217中规范的3位字母代码标记货币类型。详见【重点问题解答-问题1】 | 是       |
+| currencyType | String | 请使用国际标准组织ISO 4217中规范的3位字母代码标记货币类型。详见【重点问题解答-问题1】 | 否       |
 
 **示例：**
 
@@ -907,8 +935,8 @@ order.addItem('testID', 'Food', 'apple', 22, 33);
 
 | 参数    | 类型       | 描述                           | 是否必选 |
 | ------- | ---------- | ------------------------------ | -------- |
-| account | String     | 用户帐号，支持英文、数字、符号 | 是       |
-| order   | TDADTOrder | 订单详情，**创建订单信息**。   | 是       |
+| account | String     | 用户帐号，支持英文、数字、符号 | 否       |
+| order   | TDADTOrder | 订单详情，**创建订单信息**。   | 否       |
 
 **示例：**
 
@@ -934,7 +962,7 @@ TalkingdataAdtracking.onPlaceOrder(accountID: 'user-01',order: order);
 | ------------ | ------ | ------------------------------------------------------------ | -------- |
 | account      | String | 用户帐号，支持英文、数字、符号                               | 是       |
 | orderId      | String | 订单ID，最多64个字符，全局唯一，由开发者提供并维护（此ID很重要，如果不清楚集成时咨询客服）。用于唯一标识一次交易，以及后期系统之间对账使用；*如果多次充值成功的orderID重复，将只计算首次成功的数据，其他数据会认为重复数据丢弃。 | 是       |
-| currencyType | String | 请使用国际标准组织ISO 4217中规范的3位字母代码标记货币类型。详见【重点问题解答-问题1】 | 是       |
+| currencyType | String | 请使用国际标准组织ISO 4217中规范的3位字母代码标记货币类型。详见【重点问题解答-问题1】 | 否       |
 | amount       | int    | 订单的实际支付金额，单位为所选货币的分。比如:600分或100美分，币种以后面的currrencyType为标准。 | 否       |
 | payType      | String | 支付类型 例：appstore、支付宝、Alipay、微信等                | 否       |
 
