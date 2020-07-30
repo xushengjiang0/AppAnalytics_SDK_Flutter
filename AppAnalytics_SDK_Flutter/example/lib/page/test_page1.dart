@@ -50,8 +50,8 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> with WidgetsBinding
       case AppLifecycleState.resumed:
         print('AppLifecycleState.resumed');
         break;
-      case AppLifecycleState.suspending:
-        print('AppLifecycleState.suspending');
+//      case AppLifecycleState.suspending:
+//        print('AppLifecycleState.suspending');
     }
     setState(() {
       _lastLifecyleState = state;
