@@ -153,7 +153,7 @@ void _onPlaceOrder(){
   );
   order.addItem('testID', 'Food', 'apple', 22, 33);
   TalkingDataAppAnalytics.onPlaceOrder(
-    accountID: 'testAccount',
+    profileID: 'testProfile',
     order: order
   );
 }
@@ -166,7 +166,7 @@ void _onOrderPaySucc(){
   );
   order.addItem('testID', 'Food', 'apple', 22, 33);
   TalkingDataAppAnalytics.onOrderPaySucc(
-    accountID: 'testAccount',
+    profileID: 'testProfile',
     payType: 'Alipay',
     order: order
   );

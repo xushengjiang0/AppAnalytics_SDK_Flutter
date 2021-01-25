@@ -84,12 +84,12 @@ class BaseStatisticsPage extends StatelessWidget{
                       Text('测试账户功能'),
                       RaisedButton(
                         child: Text(
-                          'Account',
+                          'Profile',
                           style: TextStyle(
                               color: Colors.white
                           ),
                         ),
-                        onPressed: _account,
+                        onPressed: _profile,
                         color: Colors.blueAccent,
                       ),
                     ],
@@ -109,8 +109,8 @@ class BaseStatisticsPage extends StatelessWidget{
     Future.delayed(Duration(seconds: 1)).then((e) => throw Exception('async error occured!!!'));
   }
 
-  void _account(){
-    Navigator.of(context).pushNamed('/account');
+  void _profile(){
+    Navigator.of(context).pushNamed('/profile');
   }
 }
 

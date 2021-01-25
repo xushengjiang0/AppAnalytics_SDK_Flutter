@@ -235,18 +235,18 @@ Flutter:
 删除`TalkingdataAdtrackingPlugin.m`的相关代码:
 
 ```
- NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+ NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * book = [self checkArgument:call.arguments forKey:@"book" ofType:[NSString class]];
         NSNumber * begin = [self checkArgument:call.arguments forKey:@"begin" ofType:[NSNumber class]];
         NSNumber * duration = [self checkArgument:call.arguments forKey:@"duration" ofType:[NSNumber class]];
-        [TalkingDataAppCpa onRead:account book:book begin:begin.longLongValue duration:duration.intValue];
+        [TalkingDataAppCpa onRead:profile book:book begin:begin.longLongValue duration:duration.intValue];
 ```
 
 删除`TalkingdataAdtrackingPlugin.java`的相关代码:
 
 ```
 TalkingDataAppCpa.onRead(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("book"),
                         callTransInt(call,"begin"),
                         callTransInt(call,"duration"));
@@ -255,9 +255,9 @@ TalkingDataAppCpa.onRead(
 删除`talkingdata_adtracking.dart`的相关代码:
 
 ```
-  static Future<void> onRead(String account,String book ,int begin,int duration) async{
+  static Future<void> onRead(String profile,String book ,int begin,int duration) async{
     return await _channel.invokeMethod('onRead', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'book': book,
       'begin': begin,
       'duration': duration,
@@ -343,9 +343,9 @@ _setOAID() async{
 **接口名称**：
 
 ```
-onRegister(account);
+onRegister(profile);
 
-onRegisterWithinvitationCode(account,invitationCode);
+onRegisterWithinvitationCode(profile,invitationCode);
 ```
 
 
@@ -356,18 +356,18 @@ onRegisterWithinvitationCode(account,invitationCode);
 
 | 参数           | 类型   | 描述     | 是否必选 |
 | :------------- | :----- | :------- | :------- |
-| accountId      | string | 用户账号 | 是       |
+| profileId      | string | 用户账号 | 是       |
 | invitationCode | string | 邀请码   | 否       |
 
 **示例**：
 
 ```
-String account = "user01";
-TalkingdataAdtracking.onRegister(account);
+String profile = "user01";
+TalkingdataAdtracking.onRegister(profile);
 
-String account = "user01";
+String profile = "user01";
 String invitationCode = "1001";               
-TalkingdataAdtracking.onRegisterWithinvitationCode(account,invitationCode);
+TalkingdataAdtracking.onRegisterWithinvitationCode(profile,invitationCode);
 ```
 
 
@@ -382,13 +382,13 @@ TalkingdataAdtracking.onRegisterWithinvitationCode(account,invitationCode);
 
 | 参数    | 类型   | 描述     | 是否必选 |
 | ------- | ------ | -------- | -------- |
-| account | String | 用户账号 | 是       |
+| profile | String | 用户账号 | 是       |
 
 **示例**：
 
 ```objc
-String account = "user01";
-TalkingdataAdtracking.onLogin(account);
+String profile = "user01";
+TalkingdataAdtracking.onLogin(profile);
 ```
 
 
@@ -447,15 +447,15 @@ TalkingdataAdtracking.onFavorite(category,content);
 
 | 参数      | 类型   | 描述                                 | 是否必选 |
 | --------- | ------ | ------------------------------------ | -------- |
-| accountId | String | 用户账号ID，支持英文、数字、符号     | 否       |
+| profileId | String | 用户账号ID，支持英文、数字、符号     | 否       |
 | content   | String | 分享内容，支持中文、英文、数字、符号 | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String content = "best content"; 
-TalkingdataAdtracking.onShare(account,content);
+TalkingdataAdtracking.onShare(profile,content);
 ```
 
 
@@ -470,15 +470,15 @@ TalkingdataAdtracking.onShare(account,content);
 
 | 参数      | 类型   | 描述                             | 是否必选 |
 | --------- | ------ | -------------------------------- | -------- |
-| accountId | String | 用户账号ID，支持英文、数字、符号 | 否       |
+| profileId | String | 用户账号ID，支持英文、数字、符号 | 否       |
 | punchId   | String | 签到打卡ID，支持英文、数字、符号 | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String punchId = "punchId01";             
-TalkingdataAdtracking.onPunch(account,punchId);
+TalkingdataAdtracking.onPunch(profile,punchId);
 ```
 
 
@@ -493,17 +493,17 @@ TalkingdataAdtracking.onPunch(account,punchId);
 
 | 参数      | 类型   | 描述                                 | 是否必选 |
 | :-------- | :----- | :----------------------------------- | :------- |
-| accountId | string | 用户账号ID，支持英文、数字、符号     | 否       |
+| profileId | string | 用户账号ID，支持英文、数字、符号     | 否       |
 | method    | string | 支付方式，支持英文、数字、符号       | 否       |
 | content   | string | 支付信息，支持中文、英文、数字、符号 | 否       |
 
 **示例**：
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String method = "WePay";
 String content = "Game-Item-02";             
-TalkingdataAdtracking.onCreateCard(account,method,content);
+TalkingdataAdtracking.onCreateCard(profile,method,content);
 ```
 
 
@@ -589,15 +589,15 @@ TDADTSearch search = TDADTSearch(
 
 | 参数    | 类型   | 描述                           | 是否必选 |
 | ------- | ------ | ------------------------------ | -------- |
-| account | String | 用户帐号，支持英文、数字、符号 | 否       |
+| profile | String | 用户帐号，支持英文、数字、符号 | 否       |
 | content | String | 联系内容，支持英文、数字、符号 | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String content = "MyContent";             
-TalkingdataAdtracking.onContact(account,content);
+TalkingdataAdtracking.onContact(profile,content);
 ```
 
 
@@ -607,11 +607,11 @@ TalkingdataAdtracking.onContact(account,content);
 **接口名称**：
 
 ```
-onPay1(account,orderId,amount,currencyType,payType);
+onPay1(profile,orderId,amount,currencyType,payType);
 
-onPay2(account,orderId,amount,currencyType,payType,order);
+onPay2(profile,orderId,amount,currencyType,payType,order);
 
-onPay3(account,orderId,amount,currencyType,payType,itemID,itemCount);
+onPay3(profile,orderId,amount,currencyType,payType,itemID,itemCount);
 ```
 
 
@@ -622,7 +622,7 @@ onPay3(account,orderId,amount,currencyType,payType,itemID,itemCount);
 
 | 参数         | 类型       | 描述                                                         | 是否必选 |
 | ------------ | ---------- | ------------------------------------------------------------ | -------- |
-| account      | String     | 用户帐号，支持英文、数字、符号                               | 是       |
+| profile      | String     | 用户帐号，支持英文、数字、符号                               | 是       |
 | orderId      | String     | 订单ID，最多64个字符，全局唯一，由开发者提供并维护（此ID很重要，如果不清楚集成时咨询客服）。用于唯一标识一次交易，以及后期系统之间对账使用；*如果多次充值成功的orderID重复，将只计算首次成功的数据，其他数据会认为重复数据丢弃。支持英文、数字、符号 | 是       |
 | currencyType | String     | 请使用国际标准组织ISO 4217中规范的3位字母代码标记货币类型。支持英文。详见【重点问题解答-问题1】 | 否       |
 | amount       | String     | 订单的实际支付金额，单位为所选货币的分。支持数字。比如:600分或100美分，币种以后面的currrencyType为标准。 | 否       |
@@ -634,14 +634,14 @@ onPay3(account,orderId,amount,currencyType,payType,itemID,itemCount);
 **示例：**
 
 ```objc
-String account = "user-01";
+String profile = "user-01";
 String orderId = "oid001";
 int amount = 12;
 String currencyType = "CNY";
 String payType = "AliPay";
-TalkingdataAdtracking.onPay1(account,orderId,amount,currencyType,payType);
+TalkingdataAdtracking.onPay1(profile,orderId,amount,currencyType,payType);
 
-String account = "user-01";
+String profile = "user-01";
 String orderId = "oid001";
 int amount = 12;
 String currencyType = "CNY";
@@ -652,16 +652,16 @@ totalPrice: 1,
 currencyType: 'CNY',
 );
 order.addItem('testID', 'Food', 'apple', 22, 33);
-TalkingdataAdtracking.onPay2(account,orderId,amount,currencyType,payType,order);
+TalkingdataAdtracking.onPay2(profile,orderId,amount,currencyType,payType,order);
 
-String account = "user-01";
+String profile = "user-01";
 String orderId = "oid001";
 int amount = 12;
 String currencyType = "CNY";
 String payType = "AliPay";
 String itemID = "item001";
 int itemCount = 5;
-TalkingdataAdtracking.onPay3(account,orderId,amount,currencyType,payType,itemID,itemCount);
+TalkingdataAdtracking.onPay3(profile,orderId,amount,currencyType,payType,itemID,itemCount);
 ```
 
 
@@ -676,7 +676,7 @@ TalkingdataAdtracking.onPay3(account,orderId,amount,currencyType,payType,itemID,
 
 | 参数    | 类型   | 描述                                 | 是否必选 |
 | ------- | ------ | ------------------------------------ | -------- |
-| account | String | 用户帐号，支持英文、数字、符号       | 否       |
+| profile | String | 用户帐号，支持英文、数字、符号       | 否       |
 | orderId | String | 订单ID，支持英文、数字、符号         | 否       |
 | reason  | String | 退单原因，支持中文、英文、数字、符号 | 否       |
 | type    | String | 退单类型，支持中文、英文、数字、符号 | 否       |
@@ -684,11 +684,11 @@ TalkingdataAdtracking.onPay3(account,orderId,amount,currencyType,payType,itemID,
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String orderId = "oid01";
 String reason = "reason";
 String type = "type01";
-TalkingdataAdtracking.onChargeBack(account,orderId,reason,type);
+TalkingdataAdtracking.onChargeBack(profile,orderId,reason,type);
 ```
 
 
@@ -703,7 +703,7 @@ TalkingdataAdtracking.onChargeBack(account,orderId,reason,type);
 
 | 参数          | 类型   | 描述                                 | 是否必选 |
 | ------------- | ------ | ------------------------------------ | -------- |
-| account       | String | 用户账号ID，支持英文、数字、符号     | 否       |
+| profile       | String | 用户账号ID，支持英文、数字、符号     | 否       |
 | reservationId | String | 预约ID，支持中文、英文、数字、符号   | 否       |
 | category      | String | 预约分类，支持中文、英文、数字、符号 | 否       |
 | amount        | int    | 预约金，支持中文、英文、数字、符号   | 否       |
@@ -712,12 +712,12 @@ TalkingdataAdtracking.onChargeBack(account,orderId,reason,type);
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String reservationId = "100921";
 String category = "hotel";
 int amount = 1;
 String term = "MyTerm";
-TalkingdataAdtracking.onReservation(account,reservationId,category,amount,term);
+TalkingdataAdtracking.onReservation(profile,reservationId,category,amount,term);
 ```
 
 
@@ -732,7 +732,7 @@ TalkingdataAdtracking.onReservation(account,reservationId,category,amount,term);
 
 | 参数      | 类型   | 描述                                 | 是否必选 |
 | --------- | ------ | ------------------------------------ | -------- |
-| account   | String | 用户账号ID，支持英文、数字、符号     | 否       |
+| profile   | String | 用户账号ID，支持英文、数字、符号     | 否       |
 | bookingId | String | 预订ID，支持英文、数字、符号         | 否       |
 | category  | String | 预订分类，支持中文、英文、数字、符号 | 否       |
 | amount    | int    | 预订金，单位为所选货币的分           | 否       |
@@ -741,12 +741,12 @@ TalkingdataAdtracking.onReservation(account,reservationId,category,amount,term);
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String bookId = "60018";
 String category = "hotel";
 int amount = 1;
 String term = "MyTerm";
-TalkingdataAdtracking.onBooking(account,bookId,category,amount,term);
+TalkingdataAdtracking.onBooking(profile,bookId,category,amount,term);
 ```
 
 
@@ -935,7 +935,7 @@ order.addItem('testID', 'Food', 'apple', 22, 33);
 
 | 参数    | 类型       | 描述                           | 是否必选 |
 | ------- | ---------- | ------------------------------ | -------- |
-| account | String     | 用户帐号，支持英文、数字、符号 | 否       |
+| profile | String     | 用户帐号，支持英文、数字、符号 | 否       |
 | order   | TDADTOrder | 订单详情，**创建订单信息**。   | 否       |
 
 **示例：**
@@ -947,7 +947,7 @@ totalPrice: 1,
 currencyType: 'CNY',
 );
 order.addItem('testID', 'Food', 'apple', 22, 33);
-TalkingdataAdtracking.onPlaceOrder(accountID: 'user-01',order: order);
+TalkingdataAdtracking.onPlaceOrder(profileID: 'user-01',order: order);
 ```
 
 ### 支付订单
@@ -960,7 +960,7 @@ TalkingdataAdtracking.onPlaceOrder(accountID: 'user-01',order: order);
 
 | 参数         | 类型   | 描述                                                         | 是否必选 |
 | ------------ | ------ | ------------------------------------------------------------ | -------- |
-| account      | String | 用户帐号，支持英文、数字、符号                               | 是       |
+| profile      | String | 用户帐号，支持英文、数字、符号                               | 是       |
 | orderId      | String | 订单ID，最多64个字符，全局唯一，由开发者提供并维护（此ID很重要，如果不清楚集成时咨询客服）。用于唯一标识一次交易，以及后期系统之间对账使用；*如果多次充值成功的orderID重复，将只计算首次成功的数据，其他数据会认为重复数据丢弃。 | 是       |
 | currencyType | String | 请使用国际标准组织ISO 4217中规范的3位字母代码标记货币类型。详见【重点问题解答-问题1】 | 否       |
 | amount       | int    | 订单的实际支付金额，单位为所选货币的分。比如:600分或100美分，币种以后面的currrencyType为标准。 | 否       |
@@ -969,12 +969,12 @@ TalkingdataAdtracking.onPlaceOrder(accountID: 'user-01',order: order);
 **示例：**
 
 ```objc
-String account = "user-01";
+String profile = "user-01";
 String orderId = "oid001";
 int amount = 12;
 String currencyType = "CNY";
 String payType = "AliPay";
-TalkingdataAdtracking.onOrderPaySucc(account,orderId,amount,currencyType,payType);
+TalkingdataAdtracking.onOrderPaySucc(profile,orderId,amount,currencyType,payType);
 ```
 
 
@@ -989,17 +989,17 @@ TalkingdataAdtracking.onOrderPaySucc(account,orderId,amount,currencyType,payType
 
 | 参数    | 类型   | 描述                                 | 是否必选 |
 | ------- | ------ | ------------------------------------ | -------- |
-| account | String | 用户帐号ID，支持英文、数字、符号     | 否       |
+| profile | String | 用户帐号ID，支持英文、数字、符号     | 否       |
 | amount  | int    | 授信额度，支持数字                   | 否       |
 | content | String | 授信信息，支持中文、英文、数字、符号 | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 int amount = 2;
 String content = "content";
-TalkingdataAdtracking.onCredit(account,amount,content);
+TalkingdataAdtracking.onCredit(profile,amount,content);
 ```
 
 
@@ -1014,7 +1014,7 @@ TalkingdataAdtracking.onCredit(account,amount,content);
 
 | 参数        | 类型                 | 描述                           |
 | ----------- | -------------------- | ------------------------------ |
-| account     | String               | 用户帐号，支持英文、数字、符号 |
+| profile     | String               | 用户帐号，支持英文、数字、符号 |
 | transaction | TDADTTransaction对象 | 交易事件属性                   |
 
 **TDADTTransaction说明：**
@@ -1081,15 +1081,15 @@ TalkingdataAdtracking.onCreateRole(name);
 
 | 参数    | 类型   | 描述                             | 是否必选 |
 | ------- | ------ | -------------------------------- | -------- |
-| account | String | 用户帐号ID，支持英文、数字、符号 | 否       |
+| profile | String | 用户帐号ID，支持英文、数字、符号 | 否       |
 | levelID | String | 关卡ID，支持英文、数字、符号     | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String levelId = "level01";               
-TalkingdataAdtracking.onLevelPass(account,levelId);
+TalkingdataAdtracking.onLevelPass(profile,levelId);
 ```
 
 
@@ -1104,15 +1104,15 @@ TalkingdataAdtracking.onLevelPass(account,levelId);
 
 | 参数    | 类型   | 描述                             | 是否必选 |
 | ------- | ------ | -------------------------------- | -------- |
-| account | String | 用户帐号ID，支持英文、数字、符号 | 否       |
+| profile | String | 用户帐号ID，支持英文、数字、符号 | 否       |
 | content | String | 教程信息，支持英文、数字、符号   | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String content = "Gaming";
-TalkingdataAdtracking.onGuideFinished(account,content);
+TalkingdataAdtracking.onGuideFinished(profile,content);
 ```
 
 
@@ -1129,7 +1129,7 @@ TalkingdataAdtracking.onGuideFinished(account,content);
 
 | 参数     | 类型   | 描述                                 | 是否必选 |
 | -------- | ------ | ------------------------------------ | -------- |
-| account  | String | 用户帐号ID，支持英文、数字、符号     | 否       |
+| profile  | String | 用户帐号ID，支持英文、数字、符号     | 否       |
 | course   | String | 课程信息，支持中文、英文、数字、符号 | 否       |
 | begin    | int    | 开始学习时间戳，单位毫秒             | 否       |
 | duration | int    | 学习时长，单位秒                     | 否       |
@@ -1137,11 +1137,11 @@ TalkingdataAdtracking.onGuideFinished(account,content);
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String course = "Math";
 int begin = 1586669180;
 int duration = 3600;           
-TalkingdataAdtracking.onLearn(account,course,begin,duration);
+TalkingdataAdtracking.onLearn(profile,course,begin,duration);
 ```
 
 
@@ -1156,15 +1156,15 @@ TalkingdataAdtracking.onLearn(account,course,begin,duration);
 
 | 参数    | 类型   | 描述                             | 是否必选 |
 | ------- | ------ | -------------------------------- | -------- |
-| account | String | 用户帐号ID，支持英文、数字、符号 | 否       |
+| profile | String | 用户帐号ID，支持英文、数字、符号 | 否       |
 | content | String | 试听信息，支持英文、数字、符号   | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String content = "Gaming";           
-TalkingdataAdtracking.onPreviewFinished(account,content);
+TalkingdataAdtracking.onPreviewFinished(profile,content);
 ```
 
 
@@ -1179,7 +1179,7 @@ TalkingdataAdtracking.onPreviewFinished(account,content);
 
 | 参数     | 类型   | 描述                                 | 是否必选 |
 | -------- | ------ | ------------------------------------ | -------- |
-| account  | String | 用户帐号，支持中文、英文、数字、符号 | 否       |
+| profile  | String | 用户帐号，支持中文、英文、数字、符号 | 否       |
 | course   | String | 文章信息，支持中文、英文、数字、符号 | 否       |
 | begin    | int    | 开始阅读时间戳，单位毫秒             | 否       |
 | duration | int    | 阅读时长，单位秒                     | 否       |
@@ -1187,11 +1187,11 @@ TalkingdataAdtracking.onPreviewFinished(account,content);
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String book = "English";
 int begin = 1586669180;
 int duration = 3600;
-TalkingdataAdtracking.onRead(account,book,begin,duration);
+TalkingdataAdtracking.onRead(profile,book,begin,duration);
 ```
 
 
@@ -1206,15 +1206,15 @@ TalkingdataAdtracking.onRead(account,book,begin,duration);
 
 | 参数    | 类型   | 描述                                   | 是否必选 |
 | ------- | ------ | -------------------------------------- | -------- |
-| account | String | 用户帐号ID，支持中文、英文、数字、符号 | 否       |
+| profile | String | 用户帐号ID，支持中文、英文、数字、符号 | 否       |
 | content | String | 阅读信息，支持中文、英文、数字、符号   | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String content = "Gaming";
-TalkingdataAdtracking.onFreeFinished(account,content);
+TalkingdataAdtracking.onFreeFinished(profile,content);
 ```
 
 
@@ -1229,15 +1229,15 @@ TalkingdataAdtracking.onFreeFinished(account,content);
 
 | 参数          | 类型   | 描述                                 | 是否必选 |
 | ------------- | ------ | ------------------------------------ | -------- |
-| account       | String | 用户帐号，支持中文、英文、数字、符号 | 否       |
+| profile       | String | 用户帐号，支持中文、英文、数字、符号 | 否       |
 | achievementId | String | 成就ID，支持英文、数字、符号         | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String achievementId = "achievement01";
-TalkingdataAdtracking.onAchievementUnlock(account,achievementId);
+TalkingdataAdtracking.onAchievementUnlock(profile,achievementId);
 ```
 
 
@@ -1252,7 +1252,7 @@ TalkingdataAdtracking.onAchievementUnlock(account,achievementId);
 
 | 参数     | 类型   | 描述                                 | 是否必选 |
 | -------- | ------ | ------------------------------------ | -------- |
-| account  | String | 用户帐号，支持中文、英文、数字、符号 | 否       |
+| profile  | String | 用户帐号，支持中文、英文、数字、符号 | 否       |
 | course   | String | 详情信息，支持中文、英文、数字、符号 | 否       |
 | begin    | int    | 开始浏览时间戳，单位毫秒             | 否       |
 | duration | int    | 浏览时长，单位秒                     | 否       |
@@ -1260,11 +1260,11 @@ TalkingdataAdtracking.onAchievementUnlock(account,achievementId);
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String content = "content";
 int begin = 1586669180;
 int duration = 3600;
-TalkingdataAdtracking.onBrowse(account,content,begin,duration);
+TalkingdataAdtracking.onBrowse(profile,content,begin,duration);
 ```
 
 
@@ -1279,15 +1279,15 @@ TalkingdataAdtracking.onBrowse(account,content,begin,duration);
 
 | 参数    | 类型   | 描述                                 | 是否必选 |
 | ------- | ------ | ------------------------------------ | -------- |
-| account | String | 用户帐号，支持中文、英文、数字、符号 | 否       |
+| profile | String | 用户帐号，支持中文、英文、数字、符号 | 否       |
 | content | String | 体验信息，支持中文、英文、数字、符号 | 否       |
 
 **示例：**
 
 ```objc
-String account = "user01";
+String profile = "user01";
 String content = "Gaming";
-TalkingdataAdtracking.onTrialFinished(account,content);
+TalkingdataAdtracking.onTrialFinished(profile,content);
 ```
 
 

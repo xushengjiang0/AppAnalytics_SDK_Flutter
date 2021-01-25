@@ -60,23 +60,23 @@ class _MyAppState extends State<MyApp> {
                 });
               }),
               RaisedButton(child: Text('onRegister'),onPressed: (){
-                String account = "user01";
-                TalkingdataAdtracking.onRegister(account);
+                String profile = "user01";
+                TalkingdataAdtracking.onRegister(profile);
               }),
               RaisedButton(child: Text('onRegisterWithInvitationCode'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String invitationCode = "1001";
-                TalkingdataAdtracking.onRegisterWithInvitationCode(account,invitationCode);
+                TalkingdataAdtracking.onRegisterWithInvitationCode(profile,invitationCode);
               }),
               RaisedButton(child: Text('onLogin'),onPressed: (){
-                String account = "user01";
-                TalkingdataAdtracking.onLogin(account);
+                String profile = "user01";
+                TalkingdataAdtracking.onLogin(profile);
               }),
               RaisedButton(child: Text('onCreateCard'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String method = "WePay";
                 String content = "Game-Item-02";
-                TalkingdataAdtracking.onCreateCard(account,method,content);
+                TalkingdataAdtracking.onCreateCard(profile,method,content);
               }),
               RaisedButton(child: Text('onReceiveDeepLink'),onPressed: (){
                 String link = "https://www.talkingdata.com";
@@ -88,14 +88,14 @@ class _MyAppState extends State<MyApp> {
                 TalkingdataAdtracking.onFavorite(category,content);
               }),
               RaisedButton(child: Text('onShare'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String content = "best content";
-                TalkingdataAdtracking.onShare(account,content);
+                TalkingdataAdtracking.onShare(profile,content);
               }),
               RaisedButton(child: Text('onPunch'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String punchid = "punchId01";
-                TalkingdataAdtracking.onPunch(account,punchid);
+                TalkingdataAdtracking.onPunch(profile,punchid);
               }),
               RaisedButton(child: Text('onSearch'),onPressed: (){
                 TDADTSearch search = TDADTSearch(
@@ -111,25 +111,25 @@ class _MyAppState extends State<MyApp> {
                 TalkingdataAdtracking.onSearch(search);
               }),
               RaisedButton(child: Text('onReservation'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String reservationId = "100921";
                 String category = "hotel";
                 int amount = 1;
                 String term = "MyTerm";
-                TalkingdataAdtracking.onReservation(account,reservationId,category,amount,term);
+                TalkingdataAdtracking.onReservation(profile,reservationId,category,amount,term);
               }),
               RaisedButton(child: Text('onBooking'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String bookId = "60018";
                 String category = "hotel";
                 int amount = 1;
                 String term = "MyTerm";
-                TalkingdataAdtracking.onBooking(account,bookId,category,amount,term);
+                TalkingdataAdtracking.onBooking(profile,bookId,category,amount,term);
               }),
               RaisedButton(child: Text('onContact'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String content = "MyContent";
-                TalkingdataAdtracking.onContact(account,content);
+                TalkingdataAdtracking.onContact(profile,content);
               }),
               RaisedButton(child: Text('onViewItemWithCategory'),onPressed: (){
                 String category = "Book";
@@ -152,20 +152,20 @@ class _MyAppState extends State<MyApp> {
                 );
                 order.addItem('testID', 'Food', 'apple', 22, 33);
                 TalkingdataAdtracking.onPlaceOrder(
-                  accountID: 'user-01',
+                  profileID: 'user-01',
                   order: order
                 );
               }),
               RaisedButton(child: Text('onPay1'),onPressed: (){
-                String account = "user-01";
+                String profile = "user-01";
                 String orderId = "oid001";
                 int amount = 12;
                 String currencyType = "CNY";
                 String payType = "AliPay";
-                TalkingdataAdtracking.onPay1(account,orderId,amount,currencyType,payType);
+                TalkingdataAdtracking.onPay1(profile,orderId,amount,currencyType,payType);
               }),
               RaisedButton(child: Text('onPay2'),onPressed: (){
-                String account = "user-01";
+                String profile = "user-01";
                 String orderId = "oid001";
                 int amount = 12;
                 String currencyType = "CNY";
@@ -176,38 +176,38 @@ class _MyAppState extends State<MyApp> {
                   currencyType: 'CNY',
                 );
                 order.addItem('testID', 'Food', 'apple', 22, 33);
-                TalkingdataAdtracking.onPay2(account,orderId,amount,currencyType,payType,order);
+                TalkingdataAdtracking.onPay2(profile,orderId,amount,currencyType,payType,order);
               }),
               RaisedButton(child: Text('onPay3'),onPressed: (){
-                String account = "user-01";
+                String profile = "user-01";
                 String orderId = "oid001";
                 int amount = 12;
                 String currencyType = "CNY";
                 String payType = "AliPay";
                 String itemID = "item001";
                 int itemCount = 5;
-                TalkingdataAdtracking.onPay3(account,orderId,amount,currencyType,payType,itemID,itemCount);
+                TalkingdataAdtracking.onPay3(profile,orderId,amount,currencyType,payType,itemID,itemCount);
               }),
               RaisedButton(child: Text('onLearn'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String course = "Math";
                 int begin = 1586669180;
                 int duration = 3600;
-                TalkingdataAdtracking.onLearn(account,course,begin,duration);
+                TalkingdataAdtracking.onLearn(profile,course,begin,duration);
               }),
               RaisedButton(child: Text('onRead'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String book = "English";
                 int begin = 1586669180;
                 int duration = 3600;
-                TalkingdataAdtracking.onRead(account,book,begin,duration);
+                TalkingdataAdtracking.onRead(profile,book,begin,duration);
               }),
               RaisedButton(child: Text('onBrowse'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String content = "content";
                 int begin = 1586669180;
                 int duration = 3600;
-                TalkingdataAdtracking.onBrowse(account,content,begin,duration);
+                TalkingdataAdtracking.onBrowse(profile,content,begin,duration);
               }),
               RaisedButton(child: Text('onTransaction'),onPressed: (){
                 TDADTTransaction transaction = TDADTTransaction(
@@ -224,59 +224,59 @@ class _MyAppState extends State<MyApp> {
                 TalkingdataAdtracking.onTransaction("user-01",transaction);
               }),
               RaisedButton(child: Text('onCredit'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 int amount = 2;
                 String content = "content";
-                TalkingdataAdtracking.onCredit(account,amount,content);
+                TalkingdataAdtracking.onCredit(profile,amount,content);
               }),
               RaisedButton(child: Text('onChargeBack'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String orderid = "oid01";
                 String reason = "reason";
                 String type = "type01";
-                TalkingdataAdtracking.onChargeBack(account,orderid,reason,type);
+                TalkingdataAdtracking.onChargeBack(profile,orderid,reason,type);
               }),
               RaisedButton(child: Text('onCreateRole'),onPressed: (){
                 String name = "BatMan";
                 TalkingdataAdtracking.onCreateRole(name);
               }),
               RaisedButton(child: Text('onTrialFinished'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String content = "Gaming";
-                TalkingdataAdtracking.onTrialFinished(account,content);
+                TalkingdataAdtracking.onTrialFinished(profile,content);
               }),
               RaisedButton(child: Text('onGuideFinished'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String content = "Gaming";
-                TalkingdataAdtracking.onGuideFinished(account,content);
+                TalkingdataAdtracking.onGuideFinished(profile,content);
               }),
               RaisedButton(child: Text('onPreviewFinished'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String content = "Gaming";
-                TalkingdataAdtracking.onPreviewFinished(account,content);
+                TalkingdataAdtracking.onPreviewFinished(profile,content);
               }),
               RaisedButton(child: Text('onFreeFinished'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String content = "Gaming";
-                TalkingdataAdtracking.onFreeFinished(account,content);
+                TalkingdataAdtracking.onFreeFinished(profile,content);
               }),
               RaisedButton(child: Text('onLevelPass'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String levelId = "level01";
-                TalkingdataAdtracking.onLevelPass(account,levelId);
+                TalkingdataAdtracking.onLevelPass(profile,levelId);
               }),
               RaisedButton(child: Text('onAchievementUnlock'),onPressed: (){
-                String account = "user01";
+                String profile = "user01";
                 String achievementId = "achievement01";
-                TalkingdataAdtracking.onAchievementUnlock(account,achievementId);
+                TalkingdataAdtracking.onAchievementUnlock(profile,achievementId);
               }),
               RaisedButton(child: Text('onOrderPaySucc'),onPressed: (){
-                String account = "user-01";
+                String profile = "user-01";
                 String orderId = "oid001";
                 int amount = 12;
                 String currencyType = "CNY";
                 String payType = "AliPay";
-                TalkingdataAdtracking.onOrderPaySucc(account,orderId,amount,currencyType,payType);
+                TalkingdataAdtracking.onOrderPaySucc(profile,orderId,amount,currencyType,payType);
               }),
               RaisedButton(child: Text('onCustEvent1'),onPressed: (){TalkingdataAdtracking.onCustEvent1();}),
               RaisedButton(child: Text('onCustEvent2'),onPressed: (){TalkingdataAdtracking.onCustEvent2();}),
@@ -307,7 +307,7 @@ class _MyAppState extends State<MyApp> {
 
   _setOAID() async{
     oaid =  await TalkingdataAdtracking.getOAID();
-    //Print OAID or dosomething
+    //Print deviceID or dosomething
     print(oaid);
   }
 }

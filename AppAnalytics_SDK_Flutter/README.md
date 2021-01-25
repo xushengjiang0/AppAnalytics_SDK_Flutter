@@ -107,11 +107,11 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
    删除 `lib/talkingdata_appanalytics_plugin.dart` 文件中如下代码:
 
    ```dart
-   static Future<void> onPlaceOrder({String accountID, Order order}) async{
+   static Future<void> onPlaceOrder({String profileID, Order order}) async{
      ...
    }
    
-   static Future<void> onOrderPaySucc({String accountID, String payType, Order order}) async{
+   static Future<void> onOrderPaySucc({String profileID, String payType, Order order}) async{
      ...
    }
    
@@ -142,7 +142,7 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
    ```java
    case "onPlaceOrder":
      TCAgent.onPlaceOrder(
-             (String) call.argument("accountID"),
+             (String) call.argument("profileID"),
              getOrderFromFlutter(call)
      );
      break;
@@ -173,7 +173,7 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
      break;
    case "onOrderPaySucc":
      TCAgent.onOrderPaySucc(
-             (String) call.argument("accountID"),
+             (String) call.argument("profileID"),
              (String) call.argument("payType"),
              getOrderFromFlutter(call)
      );
@@ -224,7 +224,7 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
            }
            [TalkingData onViewShoppingCart:sc];
        } else if ([@"onPlaceOrder" isEqualToString:call.method]){
-           NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+           NSString * profileID = [self checkArgument:call.arguments forKey:@"profileID" ofType:[NSString class]];
            NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
            NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
            NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
@@ -240,10 +240,10 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
                NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
                [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
            }
-           [TalkingData onPlaceOrder:accountID order:order];
+           [TalkingData onPlaceOrder:profileID order:order];
            
        } else if ([@"onOrderPaySucc" isEqualToString:call.method]){
-           NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+           NSString * profileID = [self checkArgument:call.arguments forKey:@"profileID" ofType:[NSString class]];
            NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
            NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
            NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
@@ -260,7 +260,7 @@ App Analytics flutter 平台 SDK 由`封装层`和`Native SDK`两部分构成，
                NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
                [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
            }
-           [TalkingData onOrderPaySucc:accountID payType:payType order:order];
+           [TalkingData onOrderPaySucc:profileID payType:payType order:order];
        }
    ```
 
@@ -477,6 +477,28 @@ _setDeviceID() async{
 
 ---
 
+**getOAID**
+
+获取OAID。需要注意的是，这个接口建议您在初始化SDK之后的3-5秒再去调用，以避免您获取到null值
+
+**参数：**无
+
+**示例：**
+
+```dart
+String oaid;
+
+Future.delayed(Duration(seconds:3),(){
+ 		_setOAID();
+});
+
+_setOAID() async{
+   oaid =  await TalkingDataAppAnalytics.getOAID();
+}
+```
+
+---
+
 **onPageStart**
 
 触发页面事件，在页面加载完毕的时候调用，用于记录页面名称和使用时长，和 `onPageEnd` 配合使用
@@ -540,6 +562,35 @@ TalkingDataAppAnalytics.onEvent(
 
 ------
 
+**onEventWithValue**
+
+  自定义事件用于追踪任何需要了解的用户行为，如：用户点击某功能按钮、填写某个输入框、触发了某个广告等。
+
+  **参数：**
+
+| 名称       | 类型   | 说明     |
+| :--------- | ------ | -------- |
+| eventID    | String | 事件名称 |
+| eventLabel | String | 事件标签 |
+| params     | Map    | 事件参数 |
+| value      | double | 事件数值 |
+
+  **示例：**
+
+```dart
+  Map map = {};
+  map['key1'] = 'value1';
+  map['key2'] = 'value2';
+  TalkingDataAppAnalytics.onEvent(
+        eventID: 'TestEventID',
+      	eventLabel: 'TestEventLabel',
+        params: map,
+  			value:5.21
+  );
+```
+
+---
+
 **setGlobalKV**
 
 设置自定义事件全局的key,value
@@ -586,16 +637,16 @@ TalkingDataAppAnalytics.removeGlobalKV('keyXXX');
 
 | 名称        | 类型        | 说明     |
 | :---------- | ----------- | -------- |
-| accountID   | String      | 账户ID   |
-| accountType | AccountType | 账户类型 |
+| profileID   | String      | 账户ID   |
+| profileType | ProfileType | 账户类型 |
 | name        | String      | 账户昵称 |
 
 **示例：**
 
 ```dart
 TalkingDataAppAnalytics.onRegister(
-   accountID: 'TestAccountID',
-   accountType: AccountType.WEIXIN,
+   profileID: 'TestProfileID',
+   profileType: ProfileType.WEIXIN,
    name: 'testName'
 );
 ```
@@ -610,16 +661,16 @@ TalkingDataAppAnalytics.onRegister(
 
 | 名称        | 类型        | 说明     |
 | :---------- | ----------- | -------- |
-| accountID   | String      | 账户ID   |
-| accountType | AccountType | 账户类型 |
+| profileID   | String      | 账户ID   |
+| profileType | ProfileType | 账户类型 |
 | name        | String      | 账户昵称 |
 
 **示例：**
 
 ```dart
 TalkingDataAppAnalytics.onLogin(
-   accountID: 'TestAccountID',
-   accountType: AccountType.WEIXIN,
+   profileID: 'TestProfileID',
+   profileType: ProfileType.WEIXIN,
    name: 'testName'
 );
 ```
@@ -634,7 +685,7 @@ TalkingDataAppAnalytics.onLogin(
 
 | 名称      | 类型   | 说明   |
 | :-------- | ------ | ------ |
-| accountID | String | 账户ID |
+| profileID | String | 账户ID |
 | order     | Order  | 订单   |
 
 **示例：**
@@ -652,7 +703,7 @@ order.addItem(
   22, 										//商品单价
   33);										//商品数量
 TalkingDataAppAnalytics.onPlaceOrder(
-  accountID: 'testAccount',
+  profileID: 'testProfile',
   order: order
 );
 ```
@@ -667,7 +718,7 @@ TalkingDataAppAnalytics.onPlaceOrder(
 
 | 名称      | 类型   | 说明     |
 | :-------- | ------ | -------- |
-| accountID | String | 账户ID   |
+| profileID | String | 账户ID   |
 | payType   | String | 支付方式 |
 | order     | Order  | 订单     |
 
@@ -686,7 +737,7 @@ order.addItem(
   22, 										//商品单价
   33);										//商品数量
 TalkingDataAppAnalytics.onOrderPaySucc(
-  accountID: 'testAccount',
+  profileID: 'testProfile',
   payType: 'Alipay',
   order: order
 );

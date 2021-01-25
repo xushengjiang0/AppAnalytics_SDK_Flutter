@@ -5,7 +5,7 @@ import android.content.Context;
 import com.tendcloud.tenddata.Order;
 import com.tendcloud.tenddata.ShoppingCart;
 import com.tendcloud.tenddata.TCAgent;
-import com.tendcloud.tenddata.TDAccount;
+import com.tendcloud.tenddata.TDProfile;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +36,9 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
       case "getDeviceID":
         result.success(TCAgent.getDeviceId(context));
         break;
+      case "getOAID":
+        result.success(TCAgent.getOAID(context));
+        break;
       case "onPageStart":
         TCAgent.onPageStart(context, (String) call.argument("pageName"));
         break;
@@ -51,6 +54,17 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
         }
         TCAgent.onEvent(context, eventID, eventLabel, params);
         break;
+      case "onEventWithValue":
+        Map paramWith = null;
+        if (call.argument("params") instanceof Map){
+          paramWith = call.argument("params");
+        }
+        TCAgent.onEvent(context,
+                (String)call.argument("eventID"),
+                (String)call.argument("eventLabel"),
+                paramWith,
+                (double)call.argument("value"));
+        break;
       case "setGlobalKV":
         String globalKey = call.argument("key");
         Object globalValue = call.argument("value");
@@ -61,20 +75,20 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
         TCAgent.removeGlobalKV(key);
         break;
       case "onRegister":
-        String accountID = call.argument("accountID");
-        String accountType = call.argument("accountType");
+        String profileID = call.argument("profileID");
+        String profileType = call.argument("profileType");
         String name = call.argument("name");
-        TCAgent.onRegister(accountID, TDAccount.AccountType.valueOf(accountType), name);
+        TCAgent.onRegister(profileID, TDProfile.ProfileType.valueOf(profileType), name);
         break;
       case "onLogin":
-        accountID = call.argument("accountID");
-        accountType = call.argument("accountType");
+        profileID = call.argument("profileID");
+        profileType = call.argument("profileType");
         name = call.argument("name");
-        TCAgent.onLogin(accountID, TDAccount.AccountType.valueOf(accountType), name);
+        TCAgent.onLogin(profileID, TDProfile.ProfileType.valueOf(profileType), name);
         break;
       case "onPlaceOrder":
         TCAgent.onPlaceOrder(
-                (String) call.argument("accountID"),
+                (String) call.argument("profileID"),
                 getOrderFromFlutter(call)
         );
         break;
@@ -105,7 +119,7 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
         break;
       case "onOrderPaySucc":
         TCAgent.onOrderPaySucc(
-                (String) call.argument("accountID"),
+                (String) call.argument("profileID"),
                 (String) call.argument("payType"),
                 getOrderFromFlutter(call)
         );

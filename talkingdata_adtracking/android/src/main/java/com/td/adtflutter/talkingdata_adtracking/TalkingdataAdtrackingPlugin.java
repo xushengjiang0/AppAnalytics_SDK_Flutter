@@ -54,17 +54,17 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                 result.success(TalkingDataAppCpa.getOAID(context));
                 break;
             case "onRegister":
-                TalkingDataAppCpa.onRegister((String) call.argument("account"));
+                TalkingDataAppCpa.onRegister((String) call.argument("profile"));
                 break;
             case "onRegisterWithInvitationCode":
-                TalkingDataAppCpa.onRegister((String) call.argument("account"),
+                TalkingDataAppCpa.onRegister((String) call.argument("profile"),
                         (String) call.argument("invitationCode"));
                 break;
             case "onLogin":
-                TalkingDataAppCpa.onLogin((String) call.argument("account"));
+                TalkingDataAppCpa.onLogin((String) call.argument("profile"));
                 break;
             case "onCreateCard":
-                TalkingDataAppCpa.onCreateCard((String) call.argument("account"),
+                TalkingDataAppCpa.onCreateCard((String) call.argument("profile"),
                         (String) call.argument("method"),
                         (String) call.argument("content"));
                 break;
@@ -76,11 +76,11 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                         (String) call.argument("content"));
                 break;
             case "onShare":
-                TalkingDataAppCpa.onShare((String) call.argument("account"),
+                TalkingDataAppCpa.onShare((String) call.argument("profile"),
                         (String) call.argument("content"));
                 break;
             case "onPunch":
-                TalkingDataAppCpa.onPunch((String) call.argument("account"),
+                TalkingDataAppCpa.onPunch((String) call.argument("profile"),
                         (String) call.argument("punchId"));
                 break;
             case "onSearch":
@@ -96,21 +96,21 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                 TalkingDataAppCpa.onSearch(tdSearch);
                 break;
             case "onReservation":
-                TalkingDataAppCpa.onReservation((String) call.argument("account"),
+                TalkingDataAppCpa.onReservation((String) call.argument("profile"),
                         (String) call.argument("reservationId"),
                         (String) call.argument("category"),
                         callTransInt(call, "amount"),
                         (String) call.argument("term"));
                 break;
             case "onBooking":
-                TalkingDataAppCpa.onBooking((String) call.argument("account"),
+                TalkingDataAppCpa.onBooking((String) call.argument("profile"),
                         (String) call.argument("bookingId"),
                         (String) call.argument("category"),
                         callTransInt(call, "amount"),
                         (String) call.argument("content"));
                 break;
             case "onContact":
-                TalkingDataAppCpa.onContact((String) call.argument("account"),
+                TalkingDataAppCpa.onContact((String) call.argument("profile"),
                         (String) call.argument("content"));
                 break;
             case "onViewItemWithCategory":
@@ -143,12 +143,12 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                 break;
             case "onPlaceOrder":
                 TalkingDataAppCpa.onPlaceOrder(
-                        (String) call.argument("accountID"),
+                        (String) call.argument("profileID"),
                         getOrderFromFlutter(call));
                 break;
             case "onPay1":
                 TalkingDataAppCpa.onPay(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("orderId"),
                         callTransInt(call, "amount"),
                         (String) call.argument("currencyType"),
@@ -156,7 +156,7 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                 break;
             case "onPay2":
                 TalkingDataAppCpa.onPay(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("orderId"),
                         callTransInt(call, "amount"),
                         (String) call.argument("currencyType"),
@@ -165,7 +165,7 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                 break;
             case "onPay3":
                 TalkingDataAppCpa.onPay(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("orderId"),
                         callTransInt(call, "amount"),
                         (String) call.argument("currencyType"),
@@ -175,21 +175,21 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                 break;
             case "onLearn":
                 TalkingDataAppCpa.onLearn(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("course"),
                         callTransInt(call, "begin"),
                         callTransInt(call, "duration"));
                 break;
             case "onRead":
                 TalkingDataAppCpa.onRead(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("book"),
                         callTransInt(call, "begin"),
                         callTransInt(call, "duration"));
                 break;
             case "onBrowse":
                 TalkingDataAppCpa.onBrowse(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("content"),
                         callTransInt(call, "begin"),
                         callTransInt(call, "duration"));
@@ -206,19 +206,19 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                 transaction.setCurrencyType((String) call.argument("currencyType"));
                 transaction.setContent((String) call.argument("content"));
                 TalkingDataAppCpa.onTransaction(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         transaction);
 
                 break;
             case "onCredit":
                 TalkingDataAppCpa.onCredit(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         callTransInt(call, "amount"),
                         (String) call.argument("content"));
                 break;
             case "onChargeBack":
                 TalkingDataAppCpa.onChargeBack(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("orderId"),
                         (String) call.argument("reason"),
                         (String) call.argument("type"));
@@ -228,37 +228,37 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
                 break;
             case "onTrialFinished":
                 TalkingDataAppCpa.onTrialFinished(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("content"));
                 break;
             case "onGuideFinished":
                 TalkingDataAppCpa.onGuideFinished(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("content"));
                 break;
             case "onPreviewFinished":
                 TalkingDataAppCpa.onPreviewFinished(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("content"));
                 break;
             case "onFreeFinished":
                 TalkingDataAppCpa.onFreeFinished(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("content"));
                 break;
             case "onLevelPass":
                 TalkingDataAppCpa.onLevelPass(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("levelId"));
                 break;
             case "onAchievementUnlock":
                 TalkingDataAppCpa.onAchievementUnlock(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("achievementId"));
                 break;
             case "onOrderPaySucc":
                 TalkingDataAppCpa.onOrderPaySucc(
-                        (String) call.argument("account"),
+                        (String) call.argument("profile"),
                         (String) call.argument("orderId"),
                         callTransInt(call, "amount"),
                         (String) call.argument("currencyType"),

@@ -34,28 +34,28 @@
     if ([@"onPageStart" isEqualToString:call.method]) {
         NSLog(@"pageStart");
     }else if ([@"onRegister" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
-        if (account) {
-            [TalkingDataAppCpa onRegister:account];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
+        if (profile) {
+            [TalkingDataAppCpa onRegister:profile];
         }
     }else if([@"onRegisterWithInvitationCode" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * invitationCode = [self checkArgument:call.arguments forKey:@"invitationCode" ofType:[NSString class]];
-        if (account && invitationCode) {
-            [TalkingDataAppCpa onRegister:account invitationCode:invitationCode];
+        if (profile && invitationCode) {
+            [TalkingDataAppCpa onRegister:profile invitationCode:invitationCode];
         }
 
     }else if([@"onLogin" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
-        if (account) {
-            [TalkingDataAppCpa onLogin:account];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
+        if (profile) {
+            [TalkingDataAppCpa onLogin:profile];
         }
     }else if([@"onCreateCard" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * method = [self checkArgument:call.arguments forKey:@"method" ofType:[NSString class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        if (account && method && content) {
-            [TalkingDataAppCpa onCreateCard:account method:method content:content];
+        if (profile && method && content) {
+            [TalkingDataAppCpa onCreateCard:profile method:method content:content];
         }
 
     }else if([@"onReceiveDeepLink" isEqualToString:call.method]){
@@ -70,16 +70,16 @@
             [TalkingDataAppCpa onFavorite:category content:content];
         }
     }else if([@"onShare" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        if (account && content) {
-            [TalkingDataAppCpa onShare:account content:content];
+        if (profile && content) {
+            [TalkingDataAppCpa onShare:profile content:content];
         }
     }else if([@"onPunch" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * punchId = [self checkArgument:call.arguments forKey:@"punchId" ofType:[NSString class]];
-        if (account && punchId) {
-            [TalkingDataAppCpa onPunch:account punchId:punchId];
+        if (profile && punchId) {
+            [TalkingDataAppCpa onPunch:profile punchId:punchId];
         }
     }else if([@"onSearch" isEqualToString:call.method]){
         NSString * category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
@@ -101,24 +101,24 @@
         search.endDate = endDate.longLongValue;
         [TalkingDataAppCpa onSearch:search];
     }else if([@"onReservation" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * reservationId = [self checkArgument:call.arguments forKey:@"reservationId" ofType:[NSString class]];
         NSString * category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
         NSString * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
         NSString * term = [self checkArgument:call.arguments forKey:@"term" ofType:[NSString class]];
-        [TalkingDataAppCpa onReservation:account reservationId:reservationId category:category amount:amount.intValue term:term];
+        [TalkingDataAppCpa onReservation:profile reservationId:reservationId category:category amount:amount.intValue term:term];
     }else if([@"onBooking" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * bookingId = [self checkArgument:call.arguments forKey:@"bookingId" ofType:[NSString class]];
         NSString * category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
         NSString * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        [TalkingDataAppCpa onBooking:account bookingId:bookingId category:category amount:amount.intValue content:content];
+        [TalkingDataAppCpa onBooking:profile bookingId:bookingId category:category amount:amount.intValue content:content];
     }else if([@"onContact" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        if (account && content) {
-            [TalkingDataAppCpa onContact:account content:content];
+        if (profile && content) {
+            [TalkingDataAppCpa onContact:profile content:content];
         }
     }else if([@"onViewItemWithCategory" isEqualToString:call.method]){
         NSString * category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
@@ -146,7 +146,7 @@
         NSNumber * uniprice = [self checkArgument:call.arguments forKey:@"unitPrice" ofType:[NSNumber class]];
         [TalkingDataAppCpa onAddItemToShoppingCartWithCategory:category itemId:itemID name:name unitPrice:uniprice.intValue amount:amount.intValue];
     }else if ([@"onPlaceOrder" isEqualToString:call.method]){
-        NSString * accountID = [self checkArgument:call.arguments forKey:@"accountID" ofType:[NSString class]];
+        NSString * profileID = [self checkArgument:call.arguments forKey:@"profileID" ofType:[NSString class]];
         NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
         NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
         NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
@@ -160,16 +160,16 @@
             NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
             [order addItemWithCategory:category itemId:itemID name:name unitPrice:uniprice.intValue amount:amount.intValue];
         }
-        [TalkingDataAppCpa onPlaceOrder:accountID withOrder:order];
+        [TalkingDataAppCpa onPlaceOrder:profileID withOrder:order];
     }else if([@"onPay1" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * orderId = [self checkArgument:call.arguments forKey:@"orderId" ofType:[NSString class]];
         NSNumber * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
         NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
         NSString * payType = [self checkArgument:call.arguments forKey:@"payType" ofType:[NSString class]];
-        [TalkingDataAppCpa onPay:account withOrderId:orderId withAmount:amount.intValue withCurrencyType:currencyType withPayType:payType];
+        [TalkingDataAppCpa onPay:profile withOrderId:orderId withAmount:amount.intValue withCurrencyType:currencyType withPayType:payType];
     }else if([@"onPay2" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * orderId = [self checkArgument:call.arguments forKey:@"orderId" ofType:[NSString class]];
         NSNumber * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
         NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
@@ -187,38 +187,38 @@
             NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
             [order addItemWithCategory:category itemId:itemID name:name unitPrice:uniprice.intValue amount:amount.intValue];
         }
-        [TalkingDataAppCpa onPay:account withOrderId:orderId withAmount:amount.intValue withCurrencyType:currencyType withPayType:payType withOrder:order];
+        [TalkingDataAppCpa onPay:profile withOrderId:orderId withAmount:amount.intValue withCurrencyType:currencyType withPayType:payType withOrder:order];
         
     }else if([@"onPay3" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * orderId = [self checkArgument:call.arguments forKey:@"orderId" ofType:[NSString class]];
         NSNumber * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
         NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
         NSString * payType = [self checkArgument:call.arguments forKey:@"payType" ofType:[NSString class]];
         NSString * itemId = [self checkArgument:call.arguments forKey:@"itemId" ofType:[NSString class]];
         NSNumber * itemCount = [self checkArgument:call.arguments forKey:@"itemCount" ofType:[NSNumber class]];
-        [TalkingDataAppCpa onPay:account withOrderId:orderId withAmount:amount.intValue withCurrencyType:currencyType withPayType:payType withItemId:itemId withItemCount:itemCount.intValue];
+        [TalkingDataAppCpa onPay:profile withOrderId:orderId withAmount:amount.intValue withCurrencyType:currencyType withPayType:payType withItemId:itemId withItemCount:itemCount.intValue];
     }else if([@"onLearn" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * course = [self checkArgument:call.arguments forKey:@"course" ofType:[NSString class]];
         NSNumber * begin = [self checkArgument:call.arguments forKey:@"begin" ofType:[NSNumber class]];
         NSNumber * duration = [self checkArgument:call.arguments forKey:@"duration" ofType:[NSNumber class]];
-        [TalkingDataAppCpa onLearn:account course:course begin:begin.longLongValue duration:duration.intValue];
+        [TalkingDataAppCpa onLearn:profile course:course begin:begin.longLongValue duration:duration.intValue];
     }else if([@"onRead" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * book = [self checkArgument:call.arguments forKey:@"book" ofType:[NSString class]];
         NSNumber * begin = [self checkArgument:call.arguments forKey:@"begin" ofType:[NSNumber class]];
         NSNumber * duration = [self checkArgument:call.arguments forKey:@"duration" ofType:[NSNumber class]];
-        [TalkingDataAppCpa onRead:account book:book begin:begin.longLongValue duration:duration.intValue];
+        [TalkingDataAppCpa onRead:profile book:book begin:begin.longLongValue duration:duration.intValue];
     }else if([@"onBrowse" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
         NSNumber * begin = [self checkArgument:call.arguments forKey:@"begin" ofType:[NSNumber class]];
         NSNumber * duration = [self checkArgument:call.arguments forKey:@"duration" ofType:[NSNumber class]];
-        [TalkingDataAppCpa onBrowse:account content:content begin:begin.longLongValue duration:duration.intValue];
+        [TalkingDataAppCpa onBrowse:profile content:content begin:begin.longLongValue duration:duration.intValue];
     }else if([@"onTransaction" isEqualToString:call.method]){
         //to do with object
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         
         NSString * transactionId = [self checkArgument:call.arguments forKey:@"transactionId" ofType:[NSString class]];
         NSString * category = [self checkArgument:call.arguments forKey:@"category" ofType:[NSString class]];
@@ -243,53 +243,53 @@
         transaction.currencyType = currencyType;
         transaction.content = content;
         
-        [TalkingDataAppCpa onTransaction:account transaction:transaction];
+        [TalkingDataAppCpa onTransaction:profile transaction:transaction];
         
     }else if ([@"onCredit" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSNumber * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        [TalkingDataAppCpa onCredit:account amount:amount.intValue content:content];
+        [TalkingDataAppCpa onCredit:profile amount:amount.intValue content:content];
     }else if([@"onChargeBack" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * orderId = [self checkArgument:call.arguments forKey:@"orderId" ofType:[NSString class]];
         NSString * reason = [self checkArgument:call.arguments forKey:@"reason" ofType:[NSString class]];
         NSString * type = [self checkArgument:call.arguments forKey:@"type" ofType:[NSString class]];
-        [TalkingDataAppCpa onChargeBack:account orderId:orderId reason:reason type:type];
+        [TalkingDataAppCpa onChargeBack:profile orderId:orderId reason:reason type:type];
     }else if ([@"onCreateRole" isEqualToString:call.method]){
         NSString * name = [self checkArgument:call.arguments forKey:@"name" ofType:[NSString class]];
         [TalkingDataAppCpa onCreateRole:name];
     }else if([@"onTrialFinished" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        [TalkingDataAppCpa onTrialFinished:account content:content];
+        [TalkingDataAppCpa onTrialFinished:profile content:content];
     }else if([@"onGuideFinished" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        [TalkingDataAppCpa onGuideFinished:account content:content];
+        [TalkingDataAppCpa onGuideFinished:profile content:content];
     }else if([@"onPreviewFinished" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        [TalkingDataAppCpa onPreviewFinished:account content:content];
+        [TalkingDataAppCpa onPreviewFinished:profile content:content];
     }else if([@"onFreeFinished" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * content = [self checkArgument:call.arguments forKey:@"content" ofType:[NSString class]];
-        [TalkingDataAppCpa onFreeFinished:account content:content];
+        [TalkingDataAppCpa onFreeFinished:profile content:content];
     }else if([@"onLevelPass" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * levelId = [self checkArgument:call.arguments forKey:@"levelId" ofType:[NSString class]];
-        [TalkingDataAppCpa onLevelPass:account levelId:levelId];
+        [TalkingDataAppCpa onLevelPass:profile levelId:levelId];
     }else if([@"onAchievementUnlock" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * achievementId = [self checkArgument:call.arguments forKey:@"achievementId" ofType:[NSString class]];
-        [TalkingDataAppCpa onAchievementUnlock:account achievementId:achievementId];
+        [TalkingDataAppCpa onAchievementUnlock:profile achievementId:achievementId];
     }else if([@"onOrderPaySucc" isEqualToString:call.method]){
-        NSString * account = [self checkArgument:call.arguments forKey:@"account" ofType:[NSString class]];
+        NSString * profile = [self checkArgument:call.arguments forKey:@"profile" ofType:[NSString class]];
         NSString * orderId = [self checkArgument:call.arguments forKey:@"orderId" ofType:[NSString class]];
         NSNumber * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
         NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
         NSString * payType = [self checkArgument:call.arguments forKey:@"payType" ofType:[NSString class]];
-        [TalkingDataAppCpa onOrderPaySucc:account withOrderId:orderId withAmount:amount.intValue withCurrencyType:currencyType withPayType:payType];
+        [TalkingDataAppCpa onOrderPaySucc:profile withOrderId:orderId withAmount:amount.intValue withCurrencyType:currencyType withPayType:payType];
     }else if ([@"onCustEvent1" isEqualToString:call.method]){
         [TalkingDataAppCpa onCustEvent1];
     }else if ([@"onCustEvent2" isEqualToString:call.method]){

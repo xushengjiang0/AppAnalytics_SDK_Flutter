@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    implementation files('libs/SaaS_AdTracking_Android_SDK_V4.0.53.jar')
+    implementation files('libs/SaaS_AdTracking_Android_SDK_V4.0.61.jar')
 }

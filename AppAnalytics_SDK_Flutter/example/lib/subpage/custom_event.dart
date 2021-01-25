@@ -18,6 +18,7 @@ class _CustomEventPageState extends State<CustomEventPage>{
   final TextEditingController _controllerValue1 = TextEditingController();
   final TextEditingController _controllerKey2 = TextEditingController();
   final TextEditingController _controllerValue2 = TextEditingController();
+  final TextEditingController _controllerEventValue = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +115,23 @@ class _CustomEventPageState extends State<CustomEventPage>{
                       ),
                       onPressed: _submitEventData,
                       color: Colors.blueAccent,
+                    ),
+                    TextField(
+                    controller: _controllerEventValue,
+                      decoration: InputDecoration(
+                          hintText: 'value'
+                      ),
+                    ),
+
+                    RaisedButton(
+                      child: Text(
+                        '提交带value的事件数据',
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                      onPressed: _submitEventDataWithValue,
+                      color: Colors.blueAccent,
                     )
                   ],
                 ),
@@ -158,6 +176,44 @@ class _CustomEventPageState extends State<CustomEventPage>{
       eventID: _controllerEventID.text,
       eventLabel: _controllerEventLabel.text,
       params: map
+    );
+  }
+
+  void _submitEventDataWithValue(){
+    if(_controllerEventID.text.length == 0){
+      showDialog(
+          context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+            return AlertDialog(
+              title: Text('错误：'),
+              content: Text('请填写事件ID ！'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('OK'),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+        }
+      );
+      return;
+    }
+    Map map = {};
+    if(_controllerKey1.text.length > 0){
+      map[_controllerKey1.text] = _controllerValue1.text;
+    }
+
+    if(_controllerKey2.text.length > 0){
+      map[_controllerKey2.text] = _controllerValue2.text;
+    }
+    TalkingDataAppAnalytics.onEventWithValue(
+      eventID: _controllerEventID.text,
+      eventLabel: _controllerEventLabel.text,
+      params: map,
+      value:double.parse(_controllerEventValue.text)
     );
   }
 }

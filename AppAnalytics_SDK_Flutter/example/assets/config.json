@@ -23,6 +23,12 @@
       "title" : "标准事件",
       "content" : "提供标准化事件接口，基于标准化事件提供针对性的分析服务",
       "pageName": "StandardEventPage"
+    },
+    {
+      "icon" : "images/basefunction.png",
+      "title" : "获取OAID",
+      "content" : "获取oaid(仅Android)",
+      "pageName": "GetOAID"
     }
   ]
 }

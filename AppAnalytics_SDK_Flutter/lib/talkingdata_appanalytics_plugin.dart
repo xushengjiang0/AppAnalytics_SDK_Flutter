@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io';
 
 class TalkingDataAppAnalytics {
   static const MethodChannel _channel =
@@ -8,6 +9,13 @@ class TalkingDataAppAnalytics {
 
   static Future<String> getDeviceID() async{
     return await _channel.invokeMethod('getDeviceID');
+  }
+
+  static Future<String> getOAID() async{
+    if(Platform.isAndroid){
+      return await _channel.invokeMethod('getOAID');
+    }
+    return null;
   }
 
   static Future<void> onPageStart(String pageName) async{
@@ -30,6 +38,15 @@ class TalkingDataAppAnalytics {
     });
   }
 
+  static Future<void> onEventWithValue({@required String eventID, String eventLabel, Map params,double value}) async{
+    return await _channel.invokeMethod('onEventWithValue', <String, dynamic>{
+      'eventID':eventID,
+      'eventLabel':eventLabel,
+      'params':params,
+      'value':value
+    });
+  }
+
   static Future<void> setGlobalKV(String key, Object value) async{
     return await _channel.invokeMethod('setGlobalKV', <String, dynamic>{
       'key':key,
@@ -43,25 +60,25 @@ class TalkingDataAppAnalytics {
     });
   }
 
-  static Future<void> onRegister({String accountID, AccountType accountType, String name}) async{
+  static Future<void> onRegister({String profileID, ProfileType profileType, String name}) async{
     return await _channel.invokeMethod('onRegister', <String, dynamic>{
-      'accountID': accountID,
-      'accountType': accountType.toString().split('.')[1],
+      'profileID': profileID,
+      'profileType': profileType.toString().split('.')[1],
       'name': name
     });
   }
 
-  static Future<void> onLogin({String accountID, AccountType accountType, String name}) async{
+  static Future<void> onLogin({String profileID, ProfileType profileType, String name}) async{
     return await _channel.invokeMethod('onLogin', <String, dynamic>{
-      'accountID': accountID,
-      'accountType': accountType.toString().split('.')[1],
+      'profileID': profileID,
+      'profileType': profileType.toString().split('.')[1],
       'name': name
     });
   }
 
-  static Future<void> onPlaceOrder({String accountID, Order order}) async{
+  static Future<void> onPlaceOrder({String profileID, Order order}) async{
     return await _channel.invokeMethod('onPlaceOrder', <String, dynamic>{
-      'accountID': accountID,
+      'profileID': profileID,
       'orderID': order.orderID,
       'totalPrice': order.totalPrice,
       'currencyType': order.currencyType,
@@ -69,9 +86,9 @@ class TalkingDataAppAnalytics {
     });
   }
 
-  static Future<void> onOrderPaySucc({String accountID, String payType, Order order}) async{
+  static Future<void> onOrderPaySucc({String profileID, String payType, Order order}) async{
     return await _channel.invokeMethod('onOrderPaySucc', <String, dynamic>{
-      'accountID': accountID,
+      'profileID': profileID,
       'payType': payType,
       'orderID': order.orderID,
       'totalPrice': order.totalPrice,
@@ -108,7 +125,7 @@ class TalkingDataAppAnalytics {
 }
 
 
-enum AccountType{
+enum ProfileType{
   ANONYMOUS, // 匿名
   REGISTERED, // 自有帐户显性注册
   SINA_WEIBO, // 新浪微博

@@ -23,28 +23,28 @@ class TalkingdataAdtracking {
     return null;
   }
 
-  static Future<void> onRegister(String account) async{
+  static Future<void> onRegister(String profile) async{
     return await _channel.invokeMethod('onRegister', <String, dynamic>{
-      'account': account
+      'profile': profile
     });
   }
 
-  static Future<void> onRegisterWithInvitationCode(String account,String invitationCode) async{
+  static Future<void> onRegisterWithInvitationCode(String profile,String invitationCode) async{
     return await _channel.invokeMethod('onRegisterWithInvitationCode', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'invitationCode':invitationCode,
     });
   }
 
-  static Future<void> onLogin(String account) async{
+  static Future<void> onLogin(String profile) async{
     return await _channel.invokeMethod('onLogin', <String, dynamic>{
-      'account': account
+      'profile': profile
     });
   }
 
-  static Future<void> onCreateCard(String account,String method,String content) async{
+  static Future<void> onCreateCard(String profile,String method,String content) async{
     return await _channel.invokeMethod('onCreateCard', <String, dynamic>{
-      'account': account,
+      'profile': profile,
       'method': method,
       'content': content,
     });
@@ -63,16 +63,16 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onShare(String account,String content) async{
+  static Future<void> onShare(String profile,String content) async{
     return await _channel.invokeMethod('onShare', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'content':content,
     });
   }
 
-  static Future<void> onPunch(String account,String punchId) async{
+  static Future<void> onPunch(String profile,String punchId) async{
     return await _channel.invokeMethod('onPunch', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'punchId':punchId,
     });
   }
@@ -90,9 +90,9 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onReservation(String account,String reservationId,String category,int amount,String term) async{
+  static Future<void> onReservation(String profile,String reservationId,String category,int amount,String term) async{
     return await _channel.invokeMethod('onReservation', <String,dynamic>{
-    	'account': account,
+    	'profile': profile,
     	'reservationId': reservationId,
     	'category': category,
     	'amount': amount,
@@ -100,9 +100,9 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onBooking(String account,String bookingId,String category,int amount,String content) async{
+  static Future<void> onBooking(String profile,String bookingId,String category,int amount,String content) async{
     return await _channel.invokeMethod('onBooking', <String,dynamic>{
-    	'account': account,
+    	'profile': profile,
     	'bookingId': bookingId,
     	'category': category,
     	'amount': amount,
@@ -111,9 +111,9 @@ class TalkingdataAdtracking {
   }
 
 
-  static Future<void> onContact(String account,String content) async{
+  static Future<void> onContact(String profile,String content) async{
     return await _channel.invokeMethod('onContact', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'content':content,
     });
   }
@@ -143,9 +143,9 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onPlaceOrder({String accountID, TDADTOrder order}) async{
+  static Future<void> onPlaceOrder({String profileID, TDADTOrder order}) async{
     return await _channel.invokeMethod('onPlaceOrder', <String, dynamic>{
-      'accountID': accountID,
+      'profileID': profileID,
       'orderID': order.orderID,
       'totalPrice': order.totalPrice,
       'currencyType': order.currencyType,
@@ -153,9 +153,9 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onPay1(String account,String orderId ,int amount, String currencyType,String payType) async{
+  static Future<void> onPay1(String profile,String orderId ,int amount, String currencyType,String payType) async{
     return await _channel.invokeMethod('onPay1', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'orderId': orderId,
       'amount': amount,
       'currencyType': currencyType,
@@ -164,9 +164,9 @@ class TalkingdataAdtracking {
   }
 
 
-  static Future<void> onPay2(String account,String orderId ,int amount, String currencyType,String payType,TDADTOrder order) async{
+  static Future<void> onPay2(String profile,String orderId ,int amount, String currencyType,String payType,TDADTOrder order) async{
     return await _channel.invokeMethod('onPay2', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'orderId': orderId,
       'amount': amount,
       'currencyType': currencyType,
@@ -178,9 +178,9 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onPay3(String account,String orderId ,int amount, String currencyType,String payType,String itemId,int itemCount) async{
+  static Future<void> onPay3(String profile,String orderId ,int amount, String currencyType,String payType,String itemId,int itemCount) async{
     return await _channel.invokeMethod('onPay3', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'orderId': orderId,
       'amount': amount,
       'currencyType': currencyType,
@@ -190,27 +190,27 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onLearn(String account,String course ,int begin,int duration) async{
+  static Future<void> onLearn(String profile,String course ,int begin,int duration) async{
     return await _channel.invokeMethod('onLearn', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'course': course,
       'begin': begin,
       'duration': duration,
     });
   }
 
-  static Future<void> onRead(String account,String book ,int begin,int duration) async{
+  static Future<void> onRead(String profile,String book ,int begin,int duration) async{
     return await _channel.invokeMethod('onRead', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'book': book,
       'begin': begin,
       'duration': duration,
     });
   }
 
-  static Future<void> onBrowse(String account,String content ,int begin,int duration) async{
+  static Future<void> onBrowse(String profile,String content ,int begin,int duration) async{
     return await _channel.invokeMethod('onBrowse', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'content': content,
       'begin': begin,
       'duration': duration,
@@ -218,10 +218,10 @@ class TalkingdataAdtracking {
   }
 
 
-  static Future<void> onTransaction(String account,TDADTTransaction transaction) async{
+  static Future<void> onTransaction(String profile,TDADTTransaction transaction) async{
     return await _channel.invokeMethod('onTransaction', <String,dynamic>{
 
-      'account': account,
+      'profile': profile,
       'transactionId': transaction.transactionId,
       'category': transaction.category,
       'amount': transaction.amount,
@@ -234,17 +234,17 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onCredit(String account,int amount,String content ) async{
+  static Future<void> onCredit(String profile,int amount,String content ) async{
     return await _channel.invokeMethod('onCredit', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'amount': amount,
       'content': content,
     });
   }
 
-  static Future<void> onChargeBack(String account,String orderId,String reason ,String type) async{
+  static Future<void> onChargeBack(String profile,String orderId,String reason ,String type) async{
     return await _channel.invokeMethod('onChargeBack', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'orderId': orderId,
       'reason': reason,
       'type': type,
@@ -257,51 +257,51 @@ class TalkingdataAdtracking {
     });
   }
 
-  static Future<void> onTrialFinished(String account,String content) async{
+  static Future<void> onTrialFinished(String profile,String content) async{
     return await _channel.invokeMethod('onTrialFinished', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'content': content,
     });
   }
 
-  static Future<void> onGuideFinished(String account,String content) async{
+  static Future<void> onGuideFinished(String profile,String content) async{
     return await _channel.invokeMethod('onGuideFinished', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'content': content,
     });
   }
 
-  static Future<void> onPreviewFinished(String account,String content) async{
+  static Future<void> onPreviewFinished(String profile,String content) async{
     return await _channel.invokeMethod('onPreviewFinished', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'content': content,
     });
   }
 
-  static Future<void> onFreeFinished(String account,String content) async{
+  static Future<void> onFreeFinished(String profile,String content) async{
     return await _channel.invokeMethod('onFreeFinished', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'content': content,
     });
   }
 
-  static Future<void> onLevelPass(String account,String levelId) async{
+  static Future<void> onLevelPass(String profile,String levelId) async{
     return await _channel.invokeMethod('onLevelPass', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'levelId': levelId,
     });
   }
 
-  static Future<void> onAchievementUnlock(String account,String achievementId) async{
+  static Future<void> onAchievementUnlock(String profile,String achievementId) async{
     return await _channel.invokeMethod('onAchievementUnlock', <String,dynamic>{
-      'account': account,
+      'profile': profile,
       'achievementId': achievementId,
     });
   }
 
-  static Future<void> onOrderPaySucc(String account,String orderId,int amount,String currencyType,String payType) async{
+  static Future<void> onOrderPaySucc(String profile,String orderId,int amount,String currencyType,String payType) async{
     return await _channel.invokeMethod('onOrderPaySucc', <String, dynamic>{
-      'account': account,
+      'profile': profile,
       'orderId': orderId,
       'amount': amount,
       'currencyType': currencyType,

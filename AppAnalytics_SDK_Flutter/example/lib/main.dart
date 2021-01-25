@@ -7,7 +7,7 @@ import 'page/page_base.dart';
 import 'util.dart';
 import 'page/test_page1.dart';
 import 'page/test_page2.dart';
-import 'page/account.dart';
+import 'page/profile.dart';
 import 'app_route_observer.dart';
 
 
@@ -24,7 +24,7 @@ void main() {
           '/base_function': (context) => BasePage(null),
           '/test_page1': (context) => TestPage1(),
           '/test_page2': (context) => TestPage2(),
-          '/account': (context) => AccountPage(),
+          '/profile': (context) => ProfilePage(),
         },
         navigatorObservers: [
           TalkingDataRouteObserver()

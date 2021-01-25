@@ -8,26 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IOS
+#import <WebKit/WebKit.h>
+#endif
 
 #if TARGET_OS_IOS
-typedef NS_ENUM(NSUInteger, TDAccountType) {
-    TDAccountTypeAnonymous      = 0,    // 匿名账户
-    TDAccountTypeRegistered     = 1,    // 显性注册账户
-    TDAccountTypeSinaWeibo      = 2,    // 新浪微博
-    TDAccountTypeQQ             = 3,    // QQ账户
-    TDAccountTypeTencentWeibo   = 4,    // 腾讯微博
-    TDAccountTypeND91           = 5,    // 91账户
-    TDAccountTypeWeiXin         = 6,    // 微信
-    TDAccountTypeType1          = 11,   // 自定义类型1
-    TDAccountTypeType2          = 12,   // 自定义类型2
-    TDAccountTypeType3          = 13,   // 自定义类型3
-    TDAccountTypeType4          = 14,   // 自定义类型4
-    TDAccountTypeType5          = 15,   // 自定义类型5
-    TDAccountTypeType6          = 16,   // 自定义类型6
-    TDAccountTypeType7          = 17,   // 自定义类型7
-    TDAccountTypeType8          = 18,   // 自定义类型8
-    TDAccountTypeType9          = 19,   // 自定义类型9
-    TDAccountTypeType10         = 20    // 自定义类型10
+typedef NS_ENUM(NSUInteger, TDProfileType) {
+    TDProfileTypeAnonymous      = 0,    // 匿名账户
+    TDProfileTypeRegistered     = 1,    // 显性注册账户
+    TDProfileTypeSinaWeibo      = 2,    // 新浪微博
+    TDProfileTypeQQ             = 3,    // QQ账户
+    TDProfileTypeTencentWeibo   = 4,    // 腾讯微博
+    TDProfileTypeND91           = 5,    // 91账户
+    TDProfileTypeWeiXin         = 6,    // 微信
+    TDProfileTypeType1          = 11,   // 自定义类型1
+    TDProfileTypeType2          = 12,   // 自定义类型2
+    TDProfileTypeType3          = 13,   // 自定义类型3
+    TDProfileTypeType4          = 14,   // 自定义类型4
+    TDProfileTypeType5          = 15,   // 自定义类型5
+    TDProfileTypeType6          = 16,   // 自定义类型6
+    TDProfileTypeType7          = 17,   // 自定义类型7
+    TDProfileTypeType8          = 18,   // 自定义类型8
+    TDProfileTypeType9          = 19,   // 自定义类型9
+    TDProfileTypeType10         = 20    // 自定义类型10
 };
 #endif
 
@@ -76,12 +79,6 @@ typedef NS_ENUM(NSUInteger, TDAccountType) {
 @end
 #endif
 
-// 以下枚举用于WatchApp页面追踪
-typedef enum {
-    TDPageTypeGlance = 1,
-    TDPageTypeNotification = 2,
-    TDPageTypeWatchApp = 3
-} TDPageType;
 
 @interface TalkingData: NSObject
 
@@ -145,41 +142,32 @@ typedef enum {
 + (void)sessionStarted:(NSString *)appKey withChannelId:(NSString *)channelId;
 #endif
 
-#if TARGET_OS_WATCH
-/**
- *  @method initWithWatch:
- *  初始化WatchApp统计实例，请在每个入口类的init方法里调用
- *  @param  appKey      应用的唯一标识，统计后台注册得到
- */
-+ (void)initWithWatch:(NSString *)appKey;
-#endif
 
-#if TARGET_OS_IOS
-/**
- *  @method setAntiCheatingEnabled
- *  是否开启反作弊功能
- *  @param  enabled     默认是开启状态
- */
-+ (void)setAntiCheatingEnabled:(BOOL)enabled;
-#endif
 
+
+/**
+ *  @method setProfileId:
+ *  设置帐户ID
+ *  @param  profileId   账户ID
+ */
++ (void)setProfileId:(NSString *)profileId API_DEPRECATED("", ios(1, 1));
 
 #if TARGET_OS_IOS
 /**
  *  @method onRegister  注册
- *  @param  accountId   账户ID
+ *  @param  profileId   账户ID
  *  @param  type        账户类型
  *  @param  name        账户昵称
  */
-+ (void)onRegister:(NSString *)accountId type:(TDAccountType)type name:(NSString *)name;
++ (void)onRegister:(NSString *)profileId type:(TDProfileType)type name:(NSString *)name;
 
 /**
  *  @method onLogin     登录
- *  @param  accountId   账户ID
+ *  @param  profileId   账户ID
  *  @param  type        账户类型
  *  @param  name        账户昵称
  */
-+ (void)onLogin:(NSString *)accountId type:(TDAccountType)type name:(NSString *)name;
++ (void)onLogin:(NSString *)profileId type:(TDProfileType)type name:(NSString *)name;
 
 #endif
 
@@ -211,6 +199,19 @@ typedef enum {
         parameters:(NSDictionary *)parameters;
 
 /**
+ *  @method trackEvent:label:parameters:value:
+ *  数值事件
+ *  @param  eventId     事件名称（自定义）
+ *  @param  eventLabel  事件标签（自定义）
+ *  @param  parameters  事件参数 (key只支持NSString, value支持NSString和NSNumber)
+ *  @param  eventValue  事件数值（double）
+ */
++ (void)trackEvent:(NSString *)eventId
+             label:(NSString *)eventLabel
+        parameters:(NSDictionary *)parameters
+             value:(double)eventValue;
+
+/**
  *  @method setGlobalKV:value:
  *  添加全局的字段，这里的内容会每次的自定义事都会带着，发到服务器。也就是说如果您的自定义事件中每一条都需要带同样的内容，如用户名称等，就可以添加进去
  *  @param  key         自定义事件的key，如果在之后，创建自定义的时候，有相同的key，则会覆盖，全局的里相同key的内容
@@ -233,14 +234,6 @@ typedef enum {
  */
 + (void)trackPageBegin:(NSString *)pageName;
 
-/**
- *  @method trackPageBegin:withPageType:
- *  开始跟踪WatchApp某一页面（可选），记录页面打开时间
-    建议在willActivate方法里调用
- *  @param  pageName    页面名称（自定义）
- *  @param  pageType    页面类型（TDPageType枚举类型）
- */
-+ (void)trackPageBegin:(NSString *)pageName withPageType:(TDPageType)pageType;
 
 /**
  *  @method trackPageEnd
@@ -255,19 +248,19 @@ typedef enum {
 #if TARGET_OS_IOS
 /**
  *  @method onPlaceOrder    下单
- *  @param  accountId       账户ID          类型:NSString
+ *  @param  profileId       账户ID          类型:NSString
  *  @param  order           订单            类型:TalkingDataOrder
  */
-+ (void)onPlaceOrder:(NSString *)accountId order:(TalkingDataOrder *)order;
++ (void)onPlaceOrder:(NSString *)profileId order:(TalkingDataOrder *)order;
 
 
 /**
  *  @method onOrderPaySucc  支付
- *  @param  accountId       账户ID          类型:NSString
+ *  @param  profileId       账户ID          类型:NSString
  *  @param  payType         支付类型         类型:NSString
  *  @param  order           订单详情         类型:TalkingDataOrder
  */
-+ (void)onOrderPaySucc:(NSString *)accountId payType:(NSString *)payType order:(TalkingDataOrder *)order;
++ (void)onOrderPaySucc:(NSString *)profileId payType:(NSString *)payType order:(TalkingDataOrder *)order;
 
 /**
  *  @method onViewItem
@@ -312,6 +305,29 @@ typedef enum {
 #endif
 
 
+#if TARGET_OS_IOS
+/**
+ *  @method handleUrl
+ *  灵动分析扫码唤起接口
+ *  @param  url         唤起灵动的url
+ */
++ (BOOL)handleUrl:(NSURL *)url;
+
+
+/**
+ *  @method bindWKWebView
+ *  hybrid 初始化的时候 绑定wkwebview·
+ *  @param  wkwebview 支持灵动事件的wkwebview
+ */
++ (void)bindWKWebView:(WKWebView*)wkwebview API_AVAILABLE(ios(8.0));
+
+/**
+ *  @method loadWKWebViewConfig
+ *  hybrid 完成加载的时候，load一下hybrid灵动的配置。
+ *  @param  wkwebview     支持灵动事件的webView
+ */
++ (void)loadWKWebViewConfig:(WKWebView*)wkwebview API_AVAILABLE(ios(8.0));
+#endif
 
 
 
