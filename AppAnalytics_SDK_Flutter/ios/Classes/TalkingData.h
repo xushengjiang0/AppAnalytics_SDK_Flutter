@@ -36,27 +36,6 @@ typedef NS_ENUM(NSUInteger, TDProfileType) {
 
 
 #if TARGET_OS_IOS
-@interface TalkingDataOrder : NSObject
-
-/**
- *  @method createOrder
- *  @param  orderId          订单id         类型:NSString
- *  @param  total            订单总价        类型:int
- *  @param  currencyType     币种           类型:NSString
- */
-+ (TalkingDataOrder *)createOrder:(NSString *)orderId total:(int)total currencyType:(NSString *)currencyType;
-
-/**
- *  @method addItemWithCategory
- *  @param  itemId           商品Id         类型:NSString
- *  @param  category         商品类别        类型:NSString
- *  @param  name             商品名称        类型:NSString
- *  @param  unitPrice        商品单价        类型:int
- *  @param  amount           商品数量        类型:int
- */
-- (TalkingDataOrder *)addItem:(NSString *)itemId category:(NSString *)category name:(NSString *)name unitPrice:(int)unitPrice amount:(int)amount;
-
-@end
 
 
 @interface TalkingDataShoppingCart : NSObject
@@ -247,20 +226,29 @@ typedef NS_ENUM(NSUInteger, TDProfileType) {
 
 #if TARGET_OS_IOS
 /**
- *  @method onPlaceOrder    下单
- *  @param  profileId       账户ID          类型:NSString
- *  @param  order           订单            类型:TalkingDataOrder
+ *  @method onPlaceOrder    提交订单
+ *  @param  orderId         订单ID              类型:NSString
+ *  @param  amount          订单金额             类型:int
+ *  @param  currencyType    货币类型             类型:NSString
  */
-+ (void)onPlaceOrder:(NSString *)profileId order:(TalkingDataOrder *)order;
++ (void)onPlaceOrder:(NSString *)orderId amount:(int)amount currencyType:(NSString *)currencyType;
 
 
 /**
- *  @method onOrderPaySucc  支付
- *  @param  profileId       账户ID          类型:NSString
- *  @param  payType         支付类型         类型:NSString
- *  @param  order           订单详情         类型:TalkingDataOrder
+ *  @method onOrderPaySucc  支付订单
+ *  @param  orderId         订单ID              类型:NSString
+ *  @param  amount          订单金额             类型:int
+ *  @param  currencyType    货币类型             类型:NSString
+ *  @param  paymentType     支付途径              类型:NSString
  */
-+ (void)onOrderPaySucc:(NSString *)profileId payType:(NSString *)payType order:(TalkingDataOrder *)order;
++ (void)onOrderPaySucc:(NSString *)orderId amount:(int)amount currencyType:(NSString *)currencyType paymentType:(NSString *)paymentType;
+/**
+ *  @method onCancelOrder    取消订单
+ *  @param  orderId          订单ID              类型:NSString
+ *  @param  amount           订单金额             类型:int
+ *  @param  currencyType     货币类型             类型:NSString
+ */
++ (void)onCancelOrder:(NSString *)orderId amount:(int)amount currencyType:(NSString *)currencyType;
 
 /**
  *  @method onViewItem

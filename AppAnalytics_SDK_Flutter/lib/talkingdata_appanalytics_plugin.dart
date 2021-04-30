@@ -76,24 +76,28 @@ class TalkingDataAppAnalytics {
     });
   }
 
-  static Future<void> onPlaceOrder({String profileID, Order order}) async{
+  static Future<void> onPlaceOrder({String orderId,int amount,String currencyType}) async{
     return await _channel.invokeMethod('onPlaceOrder', <String, dynamic>{
-      'profileID': profileID,
-      'orderID': order.orderID,
-      'totalPrice': order.totalPrice,
-      'currencyType': order.currencyType,
-      'orderDetails': order._orderDetails
+      'orderId': orderId,
+      'amount': amount,
+      'currencyType': currencyType
     });
   }
 
-  static Future<void> onOrderPaySucc({String profileID, String payType, Order order}) async{
+  static Future<void> onOrderPaySucc({String orderId,int amount,String currencyType,String paymentType}) async{
     return await _channel.invokeMethod('onOrderPaySucc', <String, dynamic>{
-      'profileID': profileID,
-      'payType': payType,
-      'orderID': order.orderID,
-      'totalPrice': order.totalPrice,
-      'currencyType': order.currencyType,
-      'orderDetails': order._orderDetails
+      'orderId': orderId,
+      'amount': amount,
+      'currencyType': currencyType,
+      'paymentType': paymentType
+    });
+  }
+
+  static Future<void> onCancelOrder({String orderId,int amount,String currencyType}) async {
+    return await _channel.invokeMethod('onCancelOrder', <String, dynamic>{
+      'orderId': orderId,
+      'amount': amount,
+      'currencyType': currencyType
     });
   }
 
@@ -143,34 +147,6 @@ enum ProfileType{
   TYPE8, //
   TYPE9, //
   TYPE10 //
-}
-
-class Order{
-  Order({
-    this.orderID,
-    this.totalPrice,
-    this.currencyType,
-  });
-
-  final String orderID;
-
-  final int totalPrice;
-
-  final String currencyType;
-
-  List _orderDetails = List();
-
-  addItem(String id, String category, String name, int unitPrice, int amount){
-    Map map = Map();
-    map['id'] = id;
-    map['category'] = category;
-    map['name'] = name;
-    map['unitPrice'] = unitPrice;
-    map['amount'] = amount;
-    _orderDetails.add(map);
-  }
-
-
 }
 
 class ShoppingCart{

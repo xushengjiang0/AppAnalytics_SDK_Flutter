@@ -2,7 +2,6 @@ package com.talkingdata.plugin.appanalytics;
 
 import android.content.Context;
 
-import com.tendcloud.tenddata.Order;
 import com.tendcloud.tenddata.ShoppingCart;
 import com.tendcloud.tenddata.TCAgent;
 import com.tendcloud.tenddata.TDProfile;
@@ -28,6 +27,10 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "TalkingData_AppAnalytics");
     channel.setMethodCallHandler(new TalkingDataAppAnalyticsPlugin(registrar.context().getApplicationContext()));
+  }
+
+  public static void init(Context ctx, String appID, String channelID) {
+    TCAgent.init(ctx, appID, channelID);
   }
 
   @Override
@@ -88,8 +91,16 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
         break;
       case "onPlaceOrder":
         TCAgent.onPlaceOrder(
-                (String) call.argument("profileID"),
-                getOrderFromFlutter(call)
+                (String) call.argument("orderId"),
+                (int) call.argument("amount"),
+                (String) call.argument("currencyType")
+        );
+        break;
+      case "onCancelOrder":
+        TCAgent.onCancelOrder(
+                (String) call.argument("orderId"),
+                (int) call.argument("amount"),
+                (String) call.argument("currencyType")
         );
         break;
       case "onViewShoppingCart":
@@ -119,9 +130,10 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
         break;
       case "onOrderPaySucc":
         TCAgent.onOrderPaySucc(
-                (String) call.argument("profileID"),
-                (String) call.argument("payType"),
-                getOrderFromFlutter(call)
+                (String) call.argument("orderId"),
+                (int) call.argument("amount"),
+                (String) call.argument("currencyType"),
+                (String) call.argument("paymentType")
         );
         break;
       case "onViewItem":
@@ -136,32 +148,5 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
         result.notImplemented();
         break;
     }
-  }
-
-
-  private Order getOrderFromFlutter(MethodCall call){
-    Order order = null;
-    try{
-      String orderID = call.argument("orderID");
-      int totalPrice = call.argument("totalPrice");
-      String currencyType = call.argument("currencyType");
-
-      List orderDetails = call.argument("orderDetails");
-
-      order = Order.createOrder(orderID, totalPrice, currencyType);
-      for (int i = 0; i < orderDetails.size(); i++){
-        Map<String, Object> map = (Map) orderDetails.get(i);
-        String id = String.valueOf(map.get("id"));
-        String category = String.valueOf(map.get("category"));
-        String name = String.valueOf(map.get("name"));
-        int unitPrice = (int) map.get("unitPrice");
-        int amount = (int) map.get("amount");
-        order.addItem(id, category, name, unitPrice, amount);
-      }
-    }catch (Throwable t){
-      t.printStackTrace();
-    }
-
-    return order;
   }
 }

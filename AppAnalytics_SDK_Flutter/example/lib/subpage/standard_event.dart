@@ -73,7 +73,7 @@ class StandardEventPage extends StatelessWidget{
                   Expanded(
                     child: RaisedButton(
                       child: Text(
-                        '订单',
+                        '提交订单',
                         style: TextStyle(
                             color: Colors.white
                         ),
@@ -104,12 +104,20 @@ class StandardEventPage extends StatelessWidget{
                     width: 16,
                   ),
                   Expanded(
-                    child: Container(),
+                    child: RaisedButton(
+                      child: Text(
+                        '取消订单',
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                      onPressed: _onCancelOrder,
+                      color: Colors.blueAccent,
+                    ),
                     flex: 1,
                   )
                 ],
               ),
-
             ],
           )
         ],
@@ -146,28 +154,26 @@ void _onViewShoppingCart(){
 }
 
 void _onPlaceOrder(){
-  Order order = Order(
-    orderID: 'testOrderID',
-    totalPrice: 1,
-    currencyType: 'CNY',
-  );
-  order.addItem('testID', 'Food', 'apple', 22, 33);
   TalkingDataAppAnalytics.onPlaceOrder(
-    profileID: 'testProfile',
-    order: order
+    orderId: 'order01',
+    amount: 22120,
+    currencyType: 'CNY'
   );
 }
 
 void _onOrderPaySucc(){
-  Order order = Order(
-    orderID: 'testOrderID',
-    totalPrice: 1,
-    currencyType: 'CNY',
-  );
-  order.addItem('testID', 'Food', 'apple', 22, 33);
   TalkingDataAppAnalytics.onOrderPaySucc(
-    profileID: 'testProfile',
-    payType: 'Alipay',
-    order: order
+    orderId: 'order01',
+    amount: 22120,
+    currencyType: 'CNY',
+    paymentType: 'Alipay'
+  );
+}
+
+void _onCancelOrder(){
+  TalkingDataAppAnalytics.onCancelOrder(
+    orderId: 'order01',
+    amount: 22120,
+    currencyType: 'CNY'
   );
 }

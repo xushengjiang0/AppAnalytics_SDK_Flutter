@@ -146,44 +146,25 @@
         }
         [TalkingData onViewShoppingCart:sc];
     } else if ([@"onPlaceOrder" isEqualToString:call.method]){
-        NSString * profileID = [self checkArgument:call.arguments forKey:@"profileID" ofType:[NSString class]];
-        NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
-        NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
-        NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
-        NSNumber * totalPrice = [self checkArgument:call.arguments forKey:@"totalPrice" ofType:[NSNumber class]];
-        
-        TalkingDataOrder * order = [TalkingDataOrder createOrder:orderID total:totalPrice.intValue currencyType:currencyType];
-        
-        for (NSDictionary * each in orderDetails) {
-            NSNumber * amount = [self checkArgument:each forKey:@"amount" ofType:[NSNumber class]];
-            NSString * category = [self checkArgument:each forKey:@"category" ofType:[NSString class]];
-            NSString * itemID = [self checkArgument:each forKey:@"itemID" ofType:[NSString class]];
-            NSString * name = [self checkArgument:each forKey:@"name" ofType:[NSString class]];
-            NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
-            [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
-        }
-        [TalkingData onPlaceOrder:profileID order:order];
+        NSString * orderId = [self checkArgument:call.arguments forKey:@"orderId" ofType:[NSString class]];
+        NSString * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
+        NSArray * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
+        [TalkingData onPlaceOrder:orderId amount:amount currencyType:currencyType];
         
     } else if ([@"onOrderPaySucc" isEqualToString:call.method]){
-        NSString * profileID = [self checkArgument:call.arguments forKey:@"profileID" ofType:[NSString class]];
-        NSString * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
-        NSArray * orderDetails = [self checkArgument:call.arguments forKey:@"orderDetails" ofType:[NSArray class]];
-        NSString * orderID = [self checkArgument:call.arguments forKey:@"orderID" ofType:[NSString class]];
-        NSString * payType = [self checkArgument:call.arguments forKey:@"payType" ofType:[NSString class]];
-        NSNumber * totalPrice = [self checkArgument:call.arguments forKey:@"totalPrice" ofType:[NSNumber class]];
-        
-        TalkingDataOrder * order = [TalkingDataOrder createOrder:orderID total:totalPrice.intValue currencyType:currencyType];
-        
-        for (NSDictionary * each in orderDetails) {
-            NSNumber * amount = [self checkArgument:each forKey:@"amount" ofType:[NSNumber class]];
-            NSString * category = [self checkArgument:each forKey:@"category" ofType:[NSString class]];
-            NSString * itemID = [self checkArgument:each forKey:@"itemID" ofType:[NSString class]];
-            NSString * name = [self checkArgument:each forKey:@"name" ofType:[NSString class]];
-            NSNumber * uniprice = [self checkArgument:each forKey:@"unitPrice" ofType:[NSNumber class]];
-            [order addItem:itemID category:category name:name unitPrice:uniprice.intValue amount:amount.intValue];
-        }
-        [TalkingData onOrderPaySucc:profileID payType:payType order:order];
-    }else if ([@"setGlobalKV" isEqualToString:call.method]) {
+        NSString * orderId = [self checkArgument:call.arguments forKey:@"orderId" ofType:[NSString class]];
+        NSString * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
+        NSArray * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
+        NSArray * paymentType = [self checkArgument:call.arguments forKey:@"paymentType" ofType:[NSString class]];
+        [TalkingData onOrderPaySucc:orderId amount:amount currencyType:currencyType paymentType:paymentType];
+
+    } else if ([@"onCancelOrder" isEqualToString:call.method]){
+        NSString * orderId = [self checkArgument:call.arguments forKey:@"orderId" ofType:[NSString class]];
+        NSString * amount = [self checkArgument:call.arguments forKey:@"amount" ofType:[NSNumber class]];
+        NSArray * currencyType = [self checkArgument:call.arguments forKey:@"currencyType" ofType:[NSString class]];
+        [TalkingData onCancelOrder:orderId amount:amount currencyType:currencyType];
+
+    } else if ([@"setGlobalKV" isEqualToString:call.method]) {
         NSString * key = [self checkArgument:call.arguments forKey:@"key" ofType:[NSString class]];
         id value = call.arguments[@"value"];
         if (value) {
