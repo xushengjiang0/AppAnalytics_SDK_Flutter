@@ -7,6 +7,13 @@ class TalkingDataAppAnalytics {
   static const MethodChannel _channel =
       const MethodChannel('TalkingData_AppAnalytics');
 
+  static Future<void> init({String appID, String channelID}) async{
+    return await _channel.invokeMethod('init', <String, dynamic>{
+      'appID': appID,
+      'channelID': channelID
+    });
+  }
+
   static Future<String> getDeviceID() async{
     return await _channel.invokeMethod('getDeviceID');
   }

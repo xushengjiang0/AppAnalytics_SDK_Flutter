@@ -51,6 +51,12 @@ class _MyAppState extends State<MyApp> {
         ),
         body:  new ListView(
             children: [
+              RaisedButton(child: Text('init'),onPressed: (){
+                TalkingdataAdtracking.init(appID:"Your App ID",channelID:"Your Channel ID");
+              }),
+              RaisedButton(child: Text('initWithCustom'),onPressed: (){
+                TalkingdataAdtracking.initWithCustom(appID:"Your App ID",channelID:"Your Channel ID",adtCustom:"Your Custom");
+              }),
               RaisedButton(child: Text('getDeviceID'),onPressed: (){
                 _setDeviceID();
               }),

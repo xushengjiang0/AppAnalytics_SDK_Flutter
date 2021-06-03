@@ -47,6 +47,13 @@ public class TalkingdataAdtrackingPlugin implements MethodCallHandler {
     @Override
     public void onMethodCall(MethodCall call, Result result) {
         switch (call.method) {
+            case "init":
+                TalkingDataAppCpa.init(context,(String) call.argument("appID"),(String) call.argument("channelID"));
+                break;
+            case "initWithCustom":
+                TalkingDataAppCpa.init(context,(String) call.argument("appID"),(String) call.argument("channelID")
+                        ,(String)call.argument("adtCustom"));
+                break;
             case "getDeviceID":
                 result.success(TalkingDataAppCpa.getDeviceId(context));
                 break;

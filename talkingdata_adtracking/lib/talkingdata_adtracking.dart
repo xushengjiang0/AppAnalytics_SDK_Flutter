@@ -12,7 +12,20 @@ class TalkingdataAdtracking {
     return version;
   }
 
-  static Future<String> getDeviceID() async{
+  static Future<void> init({String appID, String channelID}) async {
+    return await _channel.invokeMethod('init', <String, dynamic>{'appID': appID, 'channelID': channelID});
+  }
+
+  static Future<void> initWithCustom(
+      {String appID, String channelID, String adtCustom}) async {
+    return await _channel.invokeMethod('initWithCustom', <String, dynamic>{
+      'appID': appID,
+      'channelID': channelID,
+      'adtCustom': adtCustom
+    });
+  }
+
+  static Future<String> getDeviceID() async {
     return await _channel.invokeMethod('getDeviceID');
   }
 

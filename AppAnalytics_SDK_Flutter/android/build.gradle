@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    compileOnly files('libs/SaaS_AppAnalytics_Android_SDK_V4.0.61.jar')
+    compileOnly files('libs/SaaS_AppAnalytics_Android_SDK_V4.0.62.jar')
 }

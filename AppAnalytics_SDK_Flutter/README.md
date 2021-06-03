@@ -148,6 +148,14 @@ import 'package:talkingdata_appanalytics_plugin/talkingdata_appanalytics_plugin.
    }
 ```
 
+如果您的应用中SDK需要延后初始化，可以参考以下方式在对应的dart文件中对SDK进行初始化。使用此方式进行初始化时，请尽量保证第一时间进行初始化接口的调用
+
+```dart
+String appID = "Your App ID";
+String channelID = "Channel ID";            
+TalkingDataAppAnalytics.init(appID,channelID);
+```
+
 在`myapp/android`模块下的`AndroidManifest.xml `中添加以下权限：
 
 ``` diff

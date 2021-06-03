@@ -1,4 +1,5 @@
 import 'package:appanalytics_example/subpage/get_oaid.dart';
+import 'package:appanalytics_example/subpage/init.dart';
 import 'package:flutter/material.dart';
 import 'subpage/base_statistics.dart';
 import 'subpage/page_statistics.dart';
@@ -34,6 +35,8 @@ class PageSelector{
         return StandardEventPage();
       case 'GetOAID':
         return GetOAIDPage();
+      case 'Init':
+        return InitPage();
     }
     return null;
   }

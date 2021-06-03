@@ -36,6 +36,9 @@ public class TalkingDataAppAnalyticsPlugin implements MethodCallHandler {
   @Override
   public void onMethodCall(MethodCall call, Result result) {
     switch (call.method){
+      case "init":
+        TCAgent.init(context,(String) call.argument("appID"),(String) call.argument("channelID"));
+        break;
       case "getDeviceID":
         result.success(TCAgent.getDeviceId(context));
         break;
