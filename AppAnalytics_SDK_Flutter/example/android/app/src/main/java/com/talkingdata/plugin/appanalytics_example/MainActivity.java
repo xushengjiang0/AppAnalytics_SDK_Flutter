@@ -2,8 +2,6 @@ package com.talkingdata.plugin.appanalytics_example;
 
 import android.os.Bundle;
 
-import com.tendcloud.tenddata.TCAgent;
-
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
